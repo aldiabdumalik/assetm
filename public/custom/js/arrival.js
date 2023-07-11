@@ -1,14 +1,56 @@
 import * as module from './module.js';
 $(document).ready(function () {
-    // console.log(moment())
-    // $('#modal-igi').modal('show')
+    let groupColumn = 0;
     $('.this_datepicker').datepicker({
         autoclose: true,
         todayHighlight: true,
         format: 'dd/mm/yyyy',
     })
     const dt = $('#arrival_table').DataTable({
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        ajax: {
+            method: "POST",
+            url: module.base_url + 'arrival_item/datatable',
+            headers: {'X-CSRF-TOKEN': module.header_token}
+        },
+        columns: [
+            { data: 'grouping', name: 'grouping', className: 'text-center'},
+            { data: 'arrival_date', name: 'arrival_date', className: 'text-center'},
+            { data: 'surat_jalan', name: 'surat_jalan', className: 'text-center'},
+            { data: 'arrival_total', name: 'arrival_total', className: 'text-right'},
+            { data: 'scanning_item', className: 'text-right', render: function ( data, type, row, meta ) {
+                // console.log(data.length)
+                return data.length;
+            }},
+    ],
+        columnDefs: [{ visible: false, targets: groupColumn }],
+        order: [[groupColumn, 'asc']],
+        drawCallback: function (settings) {
+            var api = this.api();
+            var rows = api.rows({ page: 'current' }).nodes();
+            var last = null;
         
+            api.column(groupColumn, { page: 'current' })
+                .data()
+                .each(function (group, i) {
+                    var arr_group = group.split('|');
+                    if (last !== group) {
+                        $(rows)
+                            .eq(i)
+                            .before(`
+                                <tr class="group">
+                                    <td colspan="4">
+                                        REG ${arr_group[1]} - ${arr_group[0]}
+                                    </td>
+                                </tr>
+                            `);
+        
+                        last = group;
+                    }
+                });
+        }
     });
 
     $('#regional').select2({

@@ -6,6 +6,9 @@ use App\Http\Requests\ArrivalRequest;
 use App\Models\ArrivalItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
+
+use function PHPUnit\Framework\isNull;
 
 class ArrivalItemController extends Controller
 {
@@ -14,7 +17,33 @@ class ArrivalItemController extends Controller
     }
 
     public function itemData(Request $request) {
-        
+        $query = ArrivalItem::with('branch.regional', 'user');
+        if (isset($request->id)) {
+            $query = $query->where('id', $request->id)->first();
+        }
+
+        if (!empty($query)) {
+            return thisSuccess('data ditemukan', $query, 200);
+        }
+
+        return thisSuccess('data tidak ditemukan', null, 204);
+    }
+
+    public function itemDataDt(Request $request) {
+        $query = ArrivalItem::with('branch.regional', 'user', 'scanningItem')->get();
+
+        return DataTables::of($query)
+            ->addColumn('grouping', function($query){
+                return $query->branch->branch_name.'|'.$query->branch->regional->regional_name;
+            })
+            ->editColumn('arrival_date', function($query){
+                return date('d/m/Y', strtotime($query->arrival_date));
+            })
+            ->addColumn('surat_jalan', function($query){
+                return 'N/A';
+            })
+            ->addIndexColumn()
+            ->make(true);
     }
 
     public function addItem(ArrivalRequest $request) {

@@ -14,7 +14,4 @@ class Regional extends Model
         'regional_name'
     ];
 
-    public function scopeSearch($query, $field, $value){
-        return $query->where($field, 'LIKE', "%$value%");
-    }
 }

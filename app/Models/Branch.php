@@ -14,4 +14,9 @@ class Branch extends Model
         'regional_id',
         'branch_name'
     ];
+
+    public function regional()
+    {
+        return $this->belongsTo(Regional::class);
+    }
 }
