@@ -55,7 +55,7 @@
     <script>
         $(document).ready(function () {
             $(document).on('click', '.validation_error', function () {
-                console.log('test')
+                // console.log('test')
                 $(this).removeClass('validation_error');
                 $(this).find('span.text-danger').remove();
             })

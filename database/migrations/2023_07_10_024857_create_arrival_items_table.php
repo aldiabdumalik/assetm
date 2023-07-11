@@ -22,10 +22,12 @@ class CreateArrivalItemsTable extends Migration
             $table->string('regional_desc');
             $table->string('branch_desc');
             $table->string('delivery_pic');
+            $table->string('no_po');
             $table->string('user_pic');
             $table->date('arrival_date');
             $table->double('arrival_total');
-            $table->text('arrival_note');
+            $table->text('arrival_note')
+                ->nullable();
             $table->timestamps();
         });
     }

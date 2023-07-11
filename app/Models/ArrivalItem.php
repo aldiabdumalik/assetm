@@ -16,6 +16,7 @@ class ArrivalItem extends Model
         'regional_desc',
         'branch_desc',
         'delivery_pic',
+        'no_po',
         'user_pic',
         'arrival_date',
         'arrival_total',

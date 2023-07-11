@@ -42,7 +42,7 @@
                 <input type="text" name="tgl" id="tgl" class="form-control this_datepicker" autocomplete="off" value="{{ date('d/m/Y') }}">
                 {{-- <span class="text-danger font-italic">harus diisi</span> --}}
               </div>
-            <div id="f_po" class="col-12 mb-2">
+            <div id="no_po" class="col-12 mb-2">
               <label for="po">No. PO</label>
               <input type="text" name="po" id="po" class="form-control" autocomplete="off">
             </div>
