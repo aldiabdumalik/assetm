@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArrivalItemController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -22,9 +23,13 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('auth', 'auth')->name('auth');
     Route::get('logout', 'logout')->name('logout');
 });
-Route::controller(DashboardController::class)->group(function () {
-    Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function () {
+    Route::controller(DashboardController::class)->group(function () {
         Route::get('/', 'index')->name('dashboard');
+        Route::get('dashboard', 'index')->name('dashboard');
     });
-    // Route::get('dashboard', 'index')->name('dashboard');
+    Route::controller(ArrivalItemController::class)->group(function () {
+        Route::get('/arrival_item', 'index')->name('arrival');
+        Route::post('/arrival_item', 'addItem')->name('arrival.add');
+    });
 });

@@ -37,7 +37,16 @@
                 </li>
 
                 <li>
-                    <a href="{{route('dashboard')}}">
+                    <a href="javascript: void(0);"><i class="fi-cog"></i> <span> Master </span> <span class="menu-arrow"></span></a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="{{route('logout')}}">User</a></li>
+                        <li><a href="{{route('logout')}}">Regional</a></li>
+                        <li><a href="{{route('logout')}}">Item</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="{{route('arrival')}}">
                         <i class="fi-inbox"></i> <span> I.G.I </span>
                     </a>
                 </li>
@@ -58,15 +67,6 @@
                     <a href="{{route('dashboard')}}">
                         <i class="fi-download"></i> <span> Report </span>
                     </a>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);"><i class="fi-cog"></i> <span> Master </span> <span class="menu-arrow"></span></a>
-                    <ul class="nav-second-level" aria-expanded="false">
-                        <li><a href="{{route('logout')}}">User</a></li>
-                        <li><a href="{{route('logout')}}">Regional</a></li>
-                        <li><a href="{{route('logout')}}">Item</a></li>
-                    </ul>
                 </li>
 
             </ul>

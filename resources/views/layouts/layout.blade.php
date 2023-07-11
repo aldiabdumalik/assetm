@@ -16,7 +16,9 @@
     <link href="{{asset('templates/plugins/jquery-loading/jquery.loading.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('templates/plugins/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('templates/plugins/datatables/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('templates/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet">
     <link href="{{asset('templates/plugins/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
+    <link href="{{asset('templates/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
     <!-- App css -->
     <link href="{{asset('templates/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('templates/assets/css/icons.css')}}" rel="stylesheet" type="text/css" />
@@ -43,10 +45,21 @@
     <script src="{{asset('templates/plugins/datatables/dataTables.responsive.min.js')}}"></script>
     <script src="{{asset('templates/plugins/datatables/responsive.bootstrap4.min.js')}}"></script>
     <script src="{{asset('templates/plugins/moment/moment.js')}}"></script>
+    <script src="{{asset('templates/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{asset('templates/plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+    <script src="{{asset('templates/plugins/select2/js/select2.min.js')}}"></script>
     <!-- App js -->
     <script src="{{asset('templates/assets/js/jquery.core.js')}}"></script>
     <script src="{{asset('templates/assets/js/jquery.app.js')}}"></script>
     @stack('page-js')
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '.validation_error', function () {
+                console.log('test')
+                $(this).removeClass('validation_error');
+                $(this).find('span.text-danger').remove();
+            })
+        })
+    </script>
 </body>
 </html>

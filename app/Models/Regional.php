@@ -13,4 +13,8 @@ class Regional extends Model
     protected $fillable = [
         'regional_name'
     ];
+
+    public function scopeSearch($query, $field, $value){
+        return $query->where($field, 'LIKE', "%$value%");
+    }
 }

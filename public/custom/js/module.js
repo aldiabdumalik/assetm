@@ -54,6 +54,14 @@ export function htmlDecode(input){
     return e.childNodes[0].nodeValue;
 }
 
+export function convertDate(tgl, format='d/m/y'){
+    if (format=='d/m/y') {
+        tgl = tgl.split('/').reverse().join('-')
+    }
+
+    return tgl;
+}
+
 export function callAjax(url, method, data=null) {
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -65,12 +73,16 @@ export function callAjax(url, method, data=null) {
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             error: function (xhr, status, error) {
                 loading_stop();
-                send_notif({
-                    icon: 'error',
-                    message: xhr.responseJSON.message
-                });
-                console.clear();
-                    reject(xhr);
+                if ('errors' in xhr.responseJSON) {
+                    console.log('validation_error')
+                }else{
+                    send_notif({
+                        icon: 'error',
+                        message: xhr.responseJSON.message
+                    });
+                }
+                // console.clear();
+                reject(xhr);
             },
             complete: function (response){
                 resolve(response);
