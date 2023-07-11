@@ -10,8 +10,8 @@
 <form id="login-form" class="form-horizontal">
     <div class="form-group m-b-20 row">
         <div class="col-12">
-            <label for="login-id">Username</label>
-            <input type="text" name="login-id" class="form-control" id="login-id" required="" autocomplete="off" placeholder="Masukan NIK Anda">
+            <label for="login-id">Email</label>
+            <input type="text" name="login-id" class="form-control" id="login-id" required="" autocomplete="off" placeholder="Masukan Email Anda">
         </div>
     </div>
 

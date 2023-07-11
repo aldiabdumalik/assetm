@@ -17,19 +17,10 @@ class AuthController extends Controller
     public function auth(Request $request)
     {
         if ($request->ajax()) {
-            if (Auth::attempt(['email' => $request->username, 'password' => $request->password])) {
+            if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                 return thisSuccess('Login successfully, wait for a minute...');
             }
-            // $username = $request->username;
-            // $user = User::where('username', $username)
-            //     ->first();
-            // // dd($user->id);
-            // if (!is_null($user->id)) {
-            //     if (Auth::attempt(['id' => $user->id, 'password' => bcrypt($request->password)])) {
-            //         return thisSuccess('Login successfully, wait for a minute...');
-            //     }
-            // }
-            return thisError('Login failed, please check username & password again!');
+            return thisError('Login failed, please check email & password again!');
         }
         return thisError('Hmmm access denied');
     }

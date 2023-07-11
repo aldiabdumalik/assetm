@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBranchsTable extends Migration
+class CreateBranchesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBranchsTable extends Migration
      */
     public function up()
     {
-        Schema::create('branchs', function (Blueprint $table) {
+        Schema::create('branches', function (Blueprint $table) {
             $table->id();
             $table->foreignId('regional_id')
                 ->constrained()
@@ -31,6 +31,6 @@ class CreateBranchsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('branchs');
+        Schema::dropIfExists('branches');
     }
 }
