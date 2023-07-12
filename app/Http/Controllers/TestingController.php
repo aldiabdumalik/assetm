@@ -16,7 +16,7 @@ class TestingController extends Controller
     public function index()
     {
         $user = UserInfo::with('branch')->where('user_id', Auth::user()->id)->first();
-        return view('pages.admin.uji_fungsi.scan', ['branch' => $user->branch->branch_name]);
+        return view('pages.admin.uji_fungsi.index', ['branch' => $user->branch->branch_name]);
     }
 
     public function scan() 

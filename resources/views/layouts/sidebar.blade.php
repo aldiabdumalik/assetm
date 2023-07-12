@@ -52,7 +52,7 @@
                 </li>
 
                 <li>
-                    <a href="{{route('dashboard')}}">
+                    <a href="{{route('testing')}}">
                         <i class="fi-cog"></i> <span> Uji Fungsi </span>
                     </a>
                 </li>
