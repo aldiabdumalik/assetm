@@ -30,9 +30,10 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::controller(ArrivalItemController::class)->group(function () {
         Route::get('/arrival_item', 'index')->name('arrival');
-        // Route::get('/arrival_item_data', 'itemData')->name('arrival.data');
+        Route::get('/arrival_item_data', 'itemData')->name('arrival.detail');
         Route::post('/arrival_item_data', 'itemDataDt')->name('arrival.data');
         Route::post('/arrival_item/datatable', 'itemDataDt')->name('arrival.data');
         Route::post('/arrival_item', 'addItem')->name('arrival.add');
+        Route::put('/arrival_item/{id}/edit', 'editItem')->name('arrival.edit');
     });
 });

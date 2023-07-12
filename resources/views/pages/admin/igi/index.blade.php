@@ -7,7 +7,7 @@
 <div class="row">
   <div class="col-12 col-md-12">
     <div class="card-box">
-      <p class="text-center" style="font-size:12px;"><i>Double click on raw to view detail</i></p>
+      <p class="text-center font-italic" style="font-size:12px;">Double click on raw to scan</p>
       <div class="table-rep-plugin">
         <div class="table-responsive" data-pattern="priority-columns">
           <table id="arrival_table" class="table table-striped dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%; cursor: pointer">
@@ -18,6 +18,7 @@
                 <th class="text-center">Surat Jalan</th>
                 <th class="text-center">TOTAL BAPB</th>
                 <th class="text-center">TOTAL SCAN</th>
+                <th class="text-center">ACTION</th>
               </tr>
             </thead>
           </table>
@@ -32,10 +33,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title" id="myLargeModalLabel">Tambah Data Kedatangan</h4>
+        <h4 class="modal-title" id="modal-igi-title">Tambah Data Kedatangan</h4>
       </div>
       <div class="modal-body">
-        <form id="form-igi" action="javascript:void(0)">
+        <form id="form-igi" action="{{route('arrival.add')}}">
           <div class="form-row align-items-center">
             <div id="arrival_date" class="col-12 mb-2">
                 <label for="tgl">Tgl. Datang</label>

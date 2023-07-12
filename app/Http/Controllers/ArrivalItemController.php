@@ -17,7 +17,7 @@ class ArrivalItemController extends Controller
     }
 
     public function itemData(Request $request) {
-        $query = ArrivalItem::with('branch.regional', 'user');
+        $query = ArrivalItem::with('branch.regional', 'user', 'scanningItem');
         if (isset($request->id)) {
             $query = $query->where('id', $request->id)->first();
         }
@@ -42,12 +42,16 @@ class ArrivalItemController extends Controller
             ->addColumn('surat_jalan', function($query){
                 return 'N/A';
             })
+            ->addColumn('action', function($query){
+                return view('pages.admin.igi.components.action', ['id' => $query->id]);
+            })
+            ->rawColumns(['action'])
             ->addIndexColumn()
             ->make(true);
     }
 
-    public function addItem(ArrivalRequest $request) {
-        
+    public function addItem(ArrivalRequest $request) 
+    {
         $create = new ArrivalItem();
         $create->user_id = Auth::user()->id;
         $create->branch_id = $request->branch_id;
@@ -66,5 +70,31 @@ class ArrivalItemController extends Controller
         }
 
         return thisError('Data gagal ditambahkan, periksa kembali form');
+    }
+
+    public function editItem($id, ArrivalRequest $request) 
+    {
+        if (isset($id)) {
+            $update = ArrivalItem::find($id);
+            $update->user_id = Auth::user()->id;
+            $update->branch_id = $request->branch_id;
+            $update->regional_desc = $request->regional_desc;
+            $update->branch_desc = $request->branch_desc;
+            $update->delivery_pic = $request->delivery_pic;
+            $update->no_po = $request->no_po;
+            $update->user_pic = $request->user_pic;
+            $update->arrival_date = $request->arrival_date;
+            $update->arrival_total = $request->arrival_total;
+            $update->arrival_note = $request->arrival_note;
+            $update->save();
+
+            if ($update) {
+                return thisSuccess('Berhasil mengupdate data', null, 201);
+            }
+
+            return thisError('Data gagal diubah, periksa kembali form');
+        }
+
+        return thisError('Data gagal diubah, periksa kembali form');
     }
 }

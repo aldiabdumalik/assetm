@@ -24,7 +24,8 @@ $(document).ready(function () {
                 // console.log(data.length)
                 return data.length;
             }},
-    ],
+            { data: 'action', name: 'action', className: 'text-center'},
+        ],
         columnDefs: [{ visible: false, targets: groupColumn }],
         order: [[groupColumn, 'asc']],
         drawCallback: function (settings) {
@@ -41,7 +42,7 @@ $(document).ready(function () {
                             .eq(i)
                             .before(`
                                 <tr class="group">
-                                    <td colspan="4">
+                                    <td colspan="5">
                                         REG ${arr_group[1]} - ${arr_group[0]}
                                     </td>
                                 </tr>
@@ -109,6 +110,7 @@ $(document).ready(function () {
 
     $(document).on('submit', '#form-igi', function(e){
         e.preventDefault();
+        let uri = new URL($(this).attr('action'));
 
         let branch_id = $('#branch').val(),
             regional_desc = $('#regional').text(),
@@ -119,8 +121,8 @@ $(document).ready(function () {
             arrival_date = module.convertDate($('#tgl').val()),
             arrival_total = $('#total').val(),
             arrival_note = $('#note').val(),
-            url = module.base_url + 'arrival_item',
-            method = 'POST';
+            url = uri.href,
+            method = uri.pathname === '/arrival_item' ? 'POST' : 'PUT';
         let jsonData = {
             branch_id : branch_id,
             regional_desc : regional_desc,
@@ -133,12 +135,15 @@ $(document).ready(function () {
             arrival_note : arrival_note,
         }
 
+        // console.log(url, method);
+
         // console.log(jsonData)
         module.loading_start();
         module.callAjax(url, method, jsonData).then(response => {
             // console.log(response)
             module.loading_stop();
             $('#form-igi').trigger('reset');
+            $('#modal-igi').modal('hide')
             module.send_notif({
                 icon: 'success',
                 message: response.message
@@ -159,5 +164,36 @@ $(document).ready(function () {
 
     $('#add-item').on('click', function(){
         $('#modal-igi').modal('show')
+    })
+
+    $(document).on('click', '.edit-item', function(){
+        let url = new URL($(this).data('href'));
+        let id = url.pathname.split('/')[2];
+        module.loading_start();
+        module.callAjax(module.base_url + 'arrival_item_data?id='+id, 'GET').then(response => {
+            let data = response.content;
+            module.loading_stop();
+            // $("#regional").select2('data', {id: data.branch.regional.id, text: data.branch.regional.regional_name});
+            // $('#branch').val();
+            // $('#regional').text();
+            // $('#branch').text();
+            $('#dpic').val(data.delivery_pic);
+            $('#po').val(data.no_po);
+            $('#pic').val(data.user_pic);
+            $('#tgl').val(data.arrival_date);
+            $('#total').val(data.arrival_total);
+            $('#note').val(data.arrival_note);
+        })
+        $('#modal-igi').modal('show')
+        $('#form-igi').attr('action', $(this).data('href'));
+        $('#modal-igi-title').text('Update Data Kedatangan')
+        $('#submit').text('Update')
+    });
+
+    $('#modal-igi').on('hidden.bs.modal', function(){
+        $('#form-igi').attr('action', module.base_url + 'arrival_item');
+        $('#form-igi').trigger('reset');
+        $('#modal-igi-title').text('Tambah Data Kedatangan')
+        $('#submit').text('Tambah')
     })
 });
