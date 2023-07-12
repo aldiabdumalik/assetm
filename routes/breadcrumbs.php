@@ -7,3 +7,6 @@ Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('arrival', function (BreadcrumbTrail $trail) {
     $trail->push('AMS Incoming Good Inspection', route('arrival'));
 });
+Breadcrumbs::for('scanning', function (BreadcrumbTrail $trail) {
+    $trail->push('Actual Scanning', '#');
+});

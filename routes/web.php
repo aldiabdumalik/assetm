@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArrivalItemController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ScanningController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,15 +26,21 @@ Route::controller(AuthController::class)->group(function () {
 });
 Route::middleware(['auth'])->group(function () {
     Route::controller(DashboardController::class)->group(function () {
-        Route::get('/', 'index')->name('dashboard');
+        Route::get('/', 'index')->name('dashboard.index');
         Route::get('dashboard', 'index')->name('dashboard');
     });
     Route::controller(ArrivalItemController::class)->group(function () {
         Route::get('/arrival_item', 'index')->name('arrival');
         Route::get('/arrival_item_data', 'itemData')->name('arrival.detail');
         Route::post('/arrival_item_data', 'itemDataDt')->name('arrival.data');
-        Route::post('/arrival_item/datatable', 'itemDataDt')->name('arrival.data');
+        Route::post('/arrival_item/datatable', 'itemDataDt')->name('arrival.datatable');
         Route::post('/arrival_item', 'addItem')->name('arrival.add');
         Route::put('/arrival_item/{id}/edit', 'editItem')->name('arrival.edit');
+    });
+    Route::controller(ScanningController::class)->group(function () {
+        // Route::get('/scanning', 'index')->name('scanning');
+        Route::get('/scanning/{id}/item', 'index')->name('scanning');
+        Route::get('/scanning/{id}/add', 'scanItem')->name('scanning.add');
+        Route::get('/scanning/{id}/cancel', 'scanItemCancel')->name('scanning.cancel');
     });
 });
