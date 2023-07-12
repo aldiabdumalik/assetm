@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 @section('title', 'AMS INCOMING GOODS INSPECTION')
 @section('content')
+<div class="row mb-3">
+    <div class="col-4">
+        <a href="{{ route('arrival') }}" class="btn btn-custom"><i class="fa fa-arrow-left"></i> Monitoring</a>
+    </div>
+</div>
 <div class="row">
     <div class="col-12 col-md-12">
         <div class="card-box">

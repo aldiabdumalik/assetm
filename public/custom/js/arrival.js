@@ -51,6 +51,11 @@ $(document).ready(function () {
                         last = group;
                     }
                 });
+        },
+        createdRow: function( row, data, dataIndex ) {
+            $(row).attr('id', data.id);
+            $(row).attr('data-action', `${module.base_url}scanning/${data.id}/item`);
+            $(row).addClass('to_scan');
         }
     });
 
@@ -107,6 +112,21 @@ $(document).ready(function () {
             cache: true
         }
     })
+
+    var touchtime = 0;
+    $(document).on("click", ".to_scan", function() {
+        if (touchtime == 0) {
+            touchtime = new Date().getTime();
+        } else {
+            if (((new Date().getTime()) - touchtime) < 800) {
+                let this_action = $(this).data('action');
+                window.location.href = this_action;
+                touchtime = 0;
+            } else {
+                touchtime = new Date().getTime();
+            }
+        }
+    });
 
     $(document).on('submit', '#form-igi', function(e){
         e.preventDefault();

@@ -4,6 +4,7 @@ use App\Http\Controllers\ArrivalItemController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ScanningController;
+use App\Http\Controllers\TestingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,5 +44,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/scanning/datatable', 'scanDt')->name('scanning.datatable');
         Route::post('/scanning/{id}/add', 'scanItem')->name('scanning.add');
         Route::delete('/scanning/{id}/cancel', 'scanItemCancel')->name('scanning.cancel');
+    });
+    Route::controller(TestingController::class)->group(function () {
+        Route::get('/uji_fungsi/scan', 'scan')->name('testing.scan');
     });
 });
