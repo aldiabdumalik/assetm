@@ -19,6 +19,13 @@ class TestingController extends Controller
         return view('pages.admin.uji_fungsi.index', ['branch' => $user->branch->branch_name]);
     }
 
+    public function testingDtGroup()
+    {
+        $query = TestingItem::with('branch.regional')->get();
+
+        return $query;
+    }
+
     public function scan() 
     {
         $user = UserInfo::with('branch')->where('user_id', Auth::user()->id)->first();
@@ -27,7 +34,7 @@ class TestingController extends Controller
 
     public function scanItem(UjiFungsiRequest $request) 
     {
-        $query = ScanningItem::with('itemModel.itemBrand.itemType')
+        $query = ScanningItem::with('arrivalItem', 'itemModel.itemBrand.itemType')
             ->where('scan_sn', $request->barcode)
             ->first();
         if (empty($query)) {
@@ -42,6 +49,7 @@ class TestingController extends Controller
 
         $scan = new TestingItem();
         $scan->user_id = Auth::user()->id;
+        $scan->branch_id = $query->arrivalItem->branch_id;
         $scan->model_id = $query->model_id;
         $scan->barcode = $request->barcode;
         $scan->status = $request->status;

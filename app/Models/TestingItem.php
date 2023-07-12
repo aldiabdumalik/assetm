@@ -12,6 +12,7 @@ class TestingItem extends Model
 
     protected $fillable = [
         'user_id',
+        'branch_id',
         'model_id',
         'barcode',
         'status',
@@ -22,4 +23,14 @@ class TestingItem extends Model
         'model_desc',
         'status_scan'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);    
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);    
+    }
 }
