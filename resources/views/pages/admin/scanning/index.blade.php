@@ -9,32 +9,30 @@
 <div class="row">
     <div class="col-12 col-md-12">
         <div class="card-box">
-            <form id="form-igi" action="{{route('arrival.add')}}">
-                <div class="form-group row">
-                    <label class="col-2 col-form-label">RC</label>
-                    <div class="col-4">
-                        <input type="text" class="form-control" readonly value="{{ $data->branch->branch_name }}">
-                    </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label">RC</label>
+                <div class="col-4">
+                    <input type="text" class="form-control" readonly value="{{ $data->branch->branch_name }}">
                 </div>
-                <div class="form-group row">
-                    <label class="col-2 col-form-label">REGIONAL</label>
-                    <div class="col-4">
-                        <input type="text" class="form-control" readonly value="{{ $data->branch->regional->regional_name }}">
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label">REGIONAL</label>
+                <div class="col-4">
+                    <input type="text" class="form-control" readonly value="{{ $data->branch->regional->regional_name }}">
                 </div>
-                <div class="form-group row">
-                    <label class="col-2 col-form-label">WILAYAH</label>
-                    <div class="col-4">
-                        <input type="text" class="form-control" readonly value="{{ $data->branch->branch_name }}">
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label">WILAYAH</label>
+                <div class="col-4">
+                    <input type="text" class="form-control" readonly value="{{ $data->branch->branch_name }}">
                 </div>
-                <div class="form-group row">
-                    <label class="col-2 col-form-label">TGL. DATANG</label>
-                    <div class="col-4">
-                        <input type="text" class="form-control" readonly value="{{ date('d/m/Y', strtotime($data->arrival_date)) }}">
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label">TGL. DATANG</label>
+                <div class="col-4">
+                    <input type="text" class="form-control" readonly value="{{ date('d/m/Y', strtotime($data->arrival_date)) }}">
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>

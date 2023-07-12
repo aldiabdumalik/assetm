@@ -46,6 +46,11 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/scanning/{id}/cancel', 'scanItemCancel')->name('scanning.cancel');
     });
     Route::controller(TestingController::class)->group(function () {
+        Route::get('/uji_fungsi', 'index')->name('testing');
         Route::get('/uji_fungsi/scan', 'scan')->name('testing.scan');
+        Route::post('/uji_fungsi/scan', 'scanItem')->name('testing.scanItem');
+        Route::post('/uji_fungsi/scan/datatable', 'testingDt')->name('testing.scan.datatable');
+        Route::delete('/uji_fungsi/{id}/cancel', 'scanCancel')->name('testing.cancel');
+        Route::get('/uji_fungsi/update', 'updateStatus')->name('testing.update');
     });
 });
