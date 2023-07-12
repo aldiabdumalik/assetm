@@ -13,4 +13,9 @@ class ItemType extends Model
     protected $fillable = [
         'type_name'
     ];
+
+    public function itemBrand()
+    {
+        return $this->hasMany(ItemBrand::class, 'item_brand_id', 'id');
+    }
 }

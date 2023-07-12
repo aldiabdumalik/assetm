@@ -18,4 +18,19 @@ class ScanningItem extends Model
         'scan_sn',
         'scan_mac',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function arrivalItem()
+    {
+        return $this->belongsTo(ArrivalItem::class);
+    }
+
+    public function itemModel()
+    {
+        return $this->belongsTo(itemModel::class, 'model_id', 'id');
+    }
 }

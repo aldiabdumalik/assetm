@@ -40,7 +40,8 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(ScanningController::class)->group(function () {
         // Route::get('/scanning', 'index')->name('scanning');
         Route::get('/scanning/{id}/item', 'index')->name('scanning');
-        Route::get('/scanning/{id}/add', 'scanItem')->name('scanning.add');
-        Route::get('/scanning/{id}/cancel', 'scanItemCancel')->name('scanning.cancel');
+        Route::post('/scanning/datatable', 'scanDt')->name('scanning.datatable');
+        Route::post('/scanning/{id}/add', 'scanItem')->name('scanning.add');
+        Route::delete('/scanning/{id}/cancel', 'scanItemCancel')->name('scanning.cancel');
     });
 });

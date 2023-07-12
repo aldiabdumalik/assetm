@@ -8,25 +8,25 @@
                 <div class="form-group row">
                     <label class="col-2 col-form-label">RC</label>
                     <div class="col-4">
-                        <input type="text" class="form-control" >
+                        <input type="text" class="form-control" readonly value="{{ $data->branch->branch_name }}">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-2 col-form-label">REGIONAL</label>
                     <div class="col-4">
-                        <input type="text" class="form-control" >
+                        <input type="text" class="form-control" readonly value="{{ $data->branch->regional->regional_name }}">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-2 col-form-label">WILAYAH</label>
                     <div class="col-4">
-                        <input type="text" class="form-control" >
+                        <input type="text" class="form-control" readonly value="{{ $data->branch->branch_name }}">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-2 col-form-label">TGL. DATANG</label>
                     <div class="col-4">
-                        <input type="text" class="form-control" >
+                        <input type="text" class="form-control" readonly value="{{ date('d/m/Y', strtotime($data->arrival_date)) }}">
                     </div>
                 </div>
             </form>
@@ -36,7 +36,7 @@
 <div class="row">
     <div class="col-12 col-md-12">
         <div class="card-box">
-            <form id="form-igi" action="{{route('arrival.add')}}">
+            <form id="form-scan" action="{{route('scanning.add', [$id])}}">
                 <div class="form-group row">
                     <label class="col-2 col-form-label">Box</label>
                     <div class="col-4" id="scan_box">
@@ -48,7 +48,7 @@
                     <div class="col-2" id="type_id">
                         <select name="jenis" id="jenis" class="form-control"></select>
                     </div>
-                    <div class="col-2" id="branch_id">
+                    <div class="col-2" id="brand_id">
                         <select name="merk" id="merk" class="form-control"></select>
                     </div>
                     <div class="col-2" id="model_id">

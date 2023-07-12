@@ -14,4 +14,10 @@ class ItemModel extends Model
         'item_brand_id',
         'model_name',
     ];
+
+    public function itemBrand()
+    {
+        return $this->belongsTo(ItemBrand::class);
+    }
+    
 }
