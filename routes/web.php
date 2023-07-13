@@ -80,5 +80,15 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(MasterItem::class)->group(function () {
         Route::get('/item', 'index')->name('item');
         Route::get('/item/datatable', 'itemDt')->name('item.datatable');
+        Route::get('/item/detail', 'itemDetail')->name('item.detail');
+        Route::post('/item/add/model', 'modelAdd')->name('item.add.model');
+        Route::post('/item/add/brand', 'brandAdd')->name('item.add.brand');
+        Route::post('/item/add/type', 'typeAdd')->name('item.add.type');
+        Route::put('/item/{id}/edit/model', 'modelEdit')->name('item.edit.model');
+        Route::put('/item/{id}/edit/brand', 'brandEdit')->name('item.edit.brand');
+        Route::put('/item/{id}/edit/type', 'typeEdit')->name('item.edit.type');
+        Route::delete('/item/{id}/delete/model', 'modelDelete')->name('item.delete.model');
+        Route::delete('/item/{id}/delete/brand', 'brandDelete')->name('item.delete.brand');
+        Route::delete('/item/{id}/delete/type', 'typeDelete')->name('item.delete.type');
     });
 });
