@@ -36,6 +36,8 @@
                     </a>
                 </li>
 
+                @if (auth()->user()->level == 1)
+                    
                 <li>
                     <a href="javascript: void(0);"><i class="fi-cog"></i> <span> Master </span> <span class="menu-arrow"></span></a>
                     <ul class="nav-second-level" aria-expanded="false">
@@ -44,6 +46,8 @@
                         <li><a href="{{route('item')}}">Item</a></li>
                     </ul>
                 </li>
+
+                @endif
 
                 <li>
                     <a href="{{route('arrival')}}">
