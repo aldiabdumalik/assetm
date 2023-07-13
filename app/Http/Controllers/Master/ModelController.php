@@ -23,11 +23,15 @@ class ModelController extends Controller
             ->addColumn('merk', function($query) {
                 return $query->itemBrand->brand_name;
             })
-            ->addColumn('tipe', function($query) {
+            ->addColumn('jenis', function($query) {
                 return $query->itemBrand->itemType->type_name;
             })
             ->addColumn('action', function($query){
-                return view('pages.admin.master.user.components.action', ['id' => $query->id]);
+                return view('pages.admin.master.item.components.action', [
+                    'id' => $query->id,
+                    'brand_id' => $query->itemBrand->id,
+                    'type_id' => $query->itemBrand->itemType->id
+                ]);
             })
             ->rawColumns(['action'])
             ->addIndexColumn()
@@ -48,7 +52,7 @@ class ModelController extends Controller
         }
 
         if ($get === 'type') {
-            $query = ItemBrand::find($id);
+            $query = ItemType::find($id);
         }
 
         return thisSuccess('OK', $query);

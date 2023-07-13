@@ -79,7 +79,7 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::controller(MasterItem::class)->group(function () {
         Route::get('/item', 'index')->name('item');
-        Route::get('/item/datatable', 'itemDt')->name('item.datatable');
+        Route::post('/item/datatable', 'itemDt')->name('item.datatable');
         Route::get('/item/detail', 'itemDetail')->name('item.detail');
         Route::post('/item/add/model', 'modelAdd')->name('item.add.model');
         Route::post('/item/add/brand', 'brandAdd')->name('item.add.brand');

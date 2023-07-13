@@ -37,6 +37,30 @@
         </div>
     </div>
 </div>
+<div id="modal-type" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title" id="modal-type-title">Tambah Data</h4>
+        </div>
+        <div class="modal-body">
+          <form id="form-type" action="{{route('item.add.type')}}">
+            <div class="form-row align-items-center">
+              <div id="type_name" class="col-12 mb-2">
+                  <label for="tname">Nama Jenis</label>
+                  <input type="text" name="tname" id="tname" class="form-control" autocomplete="off" required>
+              </div>
+              <div class="col-12 mb-2">
+                <button type="submit" id="submit-type" class="btn btn-custom btn-block">Tambah</button>
+              </div>
+            </div>
+  
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 @push('page-js')
     <script type="module" src="{{asset('custom/js/master_item.js')}}"></script>
