@@ -17,6 +17,7 @@ class ScanningItem extends Model
         'scan_box',
         'scan_sn',
         'scan_mac',
+        'status',
     ];
 
     public function user()

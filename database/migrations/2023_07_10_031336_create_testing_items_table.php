@@ -17,6 +17,8 @@ class CreateTestingItemsTable extends Migration
             $table->id();
             $table->foreignId('user_id')
                 ->nullable();
+            $table->foreignId('type_id')
+                ->nullable();
             $table->foreignId('model_id')
                 ->nullable();
             $table->string('barcode');

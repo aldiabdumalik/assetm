@@ -36,9 +36,10 @@ class TestingController extends Controller
     {
         $query = ScanningItem::with('arrivalItem', 'itemModel.itemBrand.itemType')
             ->where('scan_sn', $request->barcode)
+            ->where('status', 1)
             ->first();
         if (empty($query)) {
-            return thisError('Item tidak ada');
+            return thisError('Item tidak ditemukan');
         }
 
         $check = TestingItem::where('barcode', $request->barcode)->first();
@@ -50,6 +51,7 @@ class TestingController extends Controller
         $scan = new TestingItem();
         $scan->user_id = Auth::user()->id;
         $scan->branch_id = $query->arrivalItem->branch_id;
+        $scan->type_id = $query->itemModel->itemBrand->itemType->id;
         $scan->model_id = $query->model_id;
         $scan->barcode = $request->barcode;
         $scan->status = $request->status;
