@@ -41,7 +41,7 @@
                     <ul class="nav-second-level" aria-expanded="false">
                         <li><a href="{{route('user')}}">User</a></li>
                         <li><a href="{{route('regional')}}">Regional</a></li>
-                        <li><a href="{{route('logout')}}">Item</a></li>
+                        <li><a href="{{route('item')}}">Item</a></li>
                     </ul>
                 </li>
 

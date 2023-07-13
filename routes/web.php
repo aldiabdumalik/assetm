@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Master\RegionalController as MasterRegional;
 use App\Http\Controllers\Master\UserController as MasterUser;
+use App\Http\Controllers\Master\ModelController as MasterItem;
 use App\Http\Controllers\ScanningController;
 use App\Http\Controllers\TestingController;
 use Illuminate\Support\Facades\Route;
@@ -75,5 +76,9 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/user/{id}/set_password', 'userSetPassword')->name('user.setpassword');
         Route::delete('/user/{id}/delete', 'userDelete')->name('user.delete');
         Route::get('/user/detail', 'userDetail')->name('user.detail');
+    });
+    Route::controller(MasterItem::class)->group(function () {
+        Route::get('/item', 'index')->name('item');
+        Route::get('/item/datatable', 'itemDt')->name('item.datatable');
     });
 });

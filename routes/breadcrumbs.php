@@ -27,3 +27,6 @@ Breadcrumbs::for('regional', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('user', function (BreadcrumbTrail $trail) {
     $trail->push('User', route('user'));
 });
+Breadcrumbs::for('item', function (BreadcrumbTrail $trail) {
+    $trail->push('Item', route('item'));
+});
