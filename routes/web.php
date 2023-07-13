@@ -72,6 +72,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/user/datatable', 'userDt')->name('user.datatable');
         Route::post('/user/add', 'userAdd')->name('user.add');
         Route::put('/user/{id}/edit', 'userEdit')->name('user.edit');
+        Route::put('/user/{id}/set_password', 'userSetPassword')->name('user.setpassword');
         Route::delete('/user/{id}/delete', 'userDelete')->name('user.delete');
         Route::get('/user/detail', 'userDetail')->name('user.detail');
     });

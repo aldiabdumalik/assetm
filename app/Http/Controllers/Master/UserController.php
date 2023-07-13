@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SetPasswordRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Models\UserInfo;
@@ -63,7 +64,7 @@ class UserController extends Controller
         return thisError('Gagal menambah data');
     }
 
-    public function userSetPassword($id, Request $request)
+    public function userSetPassword($id, SetPasswordRequest $request)
     {
         $user = User::find($id);
         $user->password = bcrypt($request->password);

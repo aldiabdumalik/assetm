@@ -76,6 +76,38 @@
       </div>
     </div>
 </div>
+
+<div id="modal-password" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title" id="modal-password-title">Set Password User</h4>
+        </div>
+        <div class="modal-body">
+          <form id="form-password">
+            <div class="form-row align-items-center">
+                <div class="col-12 mb-2">
+                    <label for="pusname">Username</label>
+                    <input type="text" name="pusname" id="pusname" class="form-control" autocomplete="off" readonly>
+                </div>
+                <div class="col-12 mb-2" id="password">
+                    <label for="new_pw">Password</label>
+                    <input type="password" name="new_pw" id="new_pw" class="form-control" autocomplete="off" required>
+                </div>
+                <div class="col-12 mb-2" id="re_password">
+                    <label for="new_pw2">Ulangi Password</label>
+                    <input type="password" name="new_pw2" id="new_pw2" class="form-control" autocomplete="off" required>
+                </div>
+                <div class="col-12 mb-2">
+                    <button type="submit" id="submit2" class="btn btn-custom btn-block">Set Password</button>
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
 @endsection
 @push('page-js')
     <script type="module" src="{{asset('custom/js/users.js')}}"></script>

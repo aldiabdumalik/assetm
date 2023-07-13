@@ -5,6 +5,8 @@
     <div class="dropdown-menu">
         <a class="dropdown-item edit-user" href="javascript:void(0)" data-href="{{ route('user.edit', [$id]) }}">Edit</a>
         <div class="dropdown-divider"></div>
+        <a class="dropdown-item set-user" href="javascript:void(0)" data-href="{{ route('user.setpassword', [$id]) }}">Set Password</a>
+        <div class="dropdown-divider"></div>
         <a class="dropdown-item delete-user" href="javascript:void(0)" data-href="{{ route('user.delete', [$id]) }}">Delete</a>
     </div>
 </div>

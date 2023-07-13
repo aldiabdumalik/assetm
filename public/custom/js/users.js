@@ -51,7 +51,7 @@ $(document).ready(function () {
         module.callAjax(url.href, method, jsonData).then(response => {
             // console.log(response)
             module.loading_stop();
-            resetForm
+            resetForm()
             $('#modal-user').modal('hide')
             module.send_notif({
                 icon: 'success',
@@ -121,6 +121,52 @@ $(document).ready(function () {
             dt.ajax.reload();
         })
     });
+
+    $(document).on('click', '.set-user', function(e) {
+        e.preventDefault();
+        let url = new URL($(this).data('href'));
+        let id = url.pathname.split('/')[2];
+        module.loading_start();
+        module.callAjax(module.base_url + `user/detail?id=${id}`, 'GET').then(response => {
+            let data = response.content;
+            module.loading_stop();
+            $('#pusname').val(data.username);
+        })
+        $('#modal-password').modal('show')
+        $('#form-password').attr('action', $(this).data('href'));
+    });
+    $(document).on('submit', '#form-password', function(e) {
+        e.preventDefault();
+        let url = new URL($(this).attr('action'));
+        let jsonData = {
+            username: $('#pusname').val(),
+            password: $('#new_pw').val(),
+            re_password: $('#new_pw2').val(),
+        }
+
+        module.loading_start();
+        module.callAjax(url.href, 'PUT', jsonData).then(response => {
+            module.loading_stop();
+            $('#form-password').trigger('reset')
+            $('#modal-password').modal('hide')
+            module.send_notif({
+                icon: 'success',
+                message: response.message
+            });
+            dt.ajax.reload();
+        }).catch(err => {
+            if ('errors' in err.responseJSON) {
+                const arrError = err.responseJSON.errors;
+                const errr = Object.keys(arrError)
+                errr.map(i => {
+                    let id = '#'+i;
+                    $(id).find('span.text-danger').remove();
+                    $(id).addClass('validation_error')
+                    $(id).append(`<span class="text-danger font-italic">${arrError[i][0]}</span>`)
+                })
+            }
+        });
+    })
 
     $('#add-user').click(function() {
         $('#modal-user').modal('show')
