@@ -82,6 +82,7 @@ $(document).ready(function () {
         module.callAjax(url.href, method, jsonData).then(response => {
             module.loading_stop();
             $('#form-brand').trigger('reset');
+            $('#bjenis').val('').trigger('change');
             $('#modal-brand').modal('hide')
             module.send_notif({
                 icon: 'success',
@@ -125,6 +126,68 @@ $(document).ready(function () {
         })
     });
 
+    $(document).on('submit', '#form-model', function(e){
+        e.preventDefault();
+        let url = new URL($(this).attr('action'));
+        let method = url.pathname == '/item/add/model' ? 'POST' : 'PUT';
+        let jsonData = {
+            type_id: $('#mjenis').val(),
+            brand_id: $('#mbrand').val(),
+            model_name: $('#mname').val(),
+        }
+
+        module.loading_start();
+        module.callAjax(url.href, method, jsonData).then(response => {
+            module.loading_stop();
+            $('#form-model').trigger('reset');
+            $('#mjenis').val('').trigger('change');
+            $('#mbrand').val('').trigger('change');
+            $('#modal-model').modal('hide')
+            module.send_notif({
+                icon: 'success',
+                message: response.message
+            });
+            dt.ajax.reload();
+        })
+    })
+    $(document).on('click', '.edit-model', function(e){
+        e.preventDefault();
+        let url = new URL($(this).data('href'));
+        let id = url.pathname.split('/')[2];
+        module.loading_start();
+        module.callAjax(module.base_url + `item/detail?id=${id}&q=model`, 'GET').then(response => {
+            let data = response.content;
+            module.loading_stop();
+            $('#mname').val(data.model_name);
+            var typ = new Option(data.item_brand.item_type.type_name, data.item_brand.item_type.id);
+            typ.selected = true;
+            $("#mjenis").append(typ);
+            $("#mjenis").trigger("change");
+
+            var brd = new Option(data.item_brand.brand_name, data.item_brand.id);
+            brd.selected = true;
+            $("#mbrand").append(brd);
+            $("#mbrand").trigger("change");
+        })
+        $('#modal-model').modal('show')
+        $('#form-model').attr('action', $(this).data('href'));
+        $('#modal-model-title').text('Update Data')
+        $('#submit-model').text('Update')
+    });
+    $(document).on('click', '.delete-model', function(e) {
+        e.preventDefault();
+        let url = new URL($(this).data('href'));
+        module.loading_start();
+        module.callAjax(url.href, 'DELETE').then(response => {
+            module.loading_stop();
+            module.send_notif({
+                icon: 'success',
+                message: response.message
+            });
+            dt.ajax.reload();
+        })
+    });
+
     $('#input_type').click(function(e) {
         e.preventDefault();
         $('#modal-type').modal('show');
@@ -152,6 +215,14 @@ $(document).ready(function () {
         $('#modal-brand-title').text('Tambah Data')
         $('#submit-brand').text('Tambah')
     });
+    $('#modal-model').on('hidden.bs.modal', function(){
+        $('#form-model').attr('action', module.base_url + 'item/add/model');
+        $('#form-model').trigger('reset');
+        $('#mjenis').val('').trigger('change');
+        $('#mbrand').val('').trigger('change');
+        $('#modal-model-title').text('Tambah Data')
+        $('#submit-model').text('Tambah')
+    });
 
     $('#bjenis').select2({
         dropdownParent: $('#modal-brand'),
@@ -174,6 +245,58 @@ $(document).ready(function () {
                 return {
                     results: $.map(response.content, function(obj) {
                         return { id: obj.id, text: obj.type_name };
+                    })
+                };
+            },
+            cache: true
+        }
+    })
+    $('#mjenis').select2({
+        dropdownParent: $('#modal-model'),
+        placeholder: 'Pilih Jenis',
+        multiple: false,
+        ajax: {
+            url: module.base_url + 'api/get-jenis.json',
+            type: "get",
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                var query = {
+                    search: params.term
+                }
+                return query;
+            },
+            processResults: function(response) {
+                $('#mbrand').empty();
+                return {
+                    results: $.map(response.content, function(obj) {
+                        return { id: obj.id, text: obj.type_name };
+                    })
+                };
+            },
+            cache: true
+        }
+    })
+    $('#mbrand').select2({
+        dropdownParent: $('#modal-model'),
+        placeholder: 'Pilih Merk',
+        multiple: false,
+        ajax: {
+            url: module.base_url + 'api/get-merk.json',
+            type: "get",
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                var query = {
+                    search: params.term,
+                    type: $('#mjenis').val()
+                }
+                return query;
+            },
+            processResults: function(response) {
+                return {
+                    results: $.map(response.content, function(obj) {
+                        return { id: obj.id, text: obj.brand_name };
                     })
                 };
             },

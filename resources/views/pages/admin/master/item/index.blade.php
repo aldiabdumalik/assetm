@@ -90,6 +90,39 @@
       </div>
     </div>
 </div>
+
+<div id="modal-model" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title" id="modal-model-title">Tambah Data</h4>
+        </div>
+        <div class="modal-body">
+          <form id="form-model" action="{{route('item.add.model')}}">
+            <div class="form-row align-items-center">
+                <div class="col-12 mb-2">
+                    <label for="mjenis">Jenis</label>
+                    <select name="mjenis" id="mjenis" class="form-control" required></select>
+                </div>
+                <div class="col-12 mb-2">
+                    <label for="mbrand">Merk</label>
+                    <select name="mbrand" id="mbrand" class="form-control" required></select>
+                </div>
+                <div class="col-12 mb-2">
+                    <label for="mname">Tipe Name</label>
+                    <input type="text" name="mname" id="mname" class="form-control" autocomplete="off" required>
+                </div>
+                <div class="col-12 mb-2">
+                    <button type="submit" id="submit-model" class="btn btn-custom btn-block">Tambah</button>
+                </div>
+            </div>
+  
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
 @endsection
 @push('page-js')
     <script type="module" src="{{asset('custom/js/master_item.js')}}"></script>
