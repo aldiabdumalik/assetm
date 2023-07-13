@@ -62,7 +62,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/regional/datatable', 'regionalDt')->name('regional.datatable');
         Route::post('/regional/add', 'regionalAdd')->name('regional.add');
         Route::put('/regional/{id}/edit', 'regionalEdit')->name('regional.edit');
-        Route::put('/regional/{id}/edit/wilayah', 'regionalEdit')->name('regional.edit.wilayah');
         Route::get('/regional/detail', 'reqDetail')->name('regional.detail');
+        Route::post('/regional/add/wilayah', 'branchAdd')->name('regional.add.wilayah');
+        Route::put('/regional/{id}/edit/wilayah', 'branchEdit')->name('regional.edit.wilayah');
     });
 });

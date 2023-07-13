@@ -50,127 +50,30 @@ $(document).ready(function () {
         }
     });
 
-    // $('#regional').select2({
-    //     dropdownParent: $('#modal-igi'),
-    //     placeholder: 'Pilih Regional',
-    //     multiple: false,
-    //     ajax: {
-    //         url: module.base_url + 'api/get-regional.json',
-    //         type: "get",
-    //         dataType: 'json',
-    //         delay: 250,
-    //         data: function(params) {
-    //             var query = {
-    //                 search: params.term
-    //             }
-    //             return query;
-    //         },
-    //         processResults: function(response) {
-    //             $('#branch').empty();
-    //             return {
-    //                 results: $.map(response.content, function(obj) {
-    //                     return { id: obj.id, text: obj.regional_name };
-    //                 })
-    //             };
-    //         },
-    //         cache: true
-    //     }
-    // })
-
-    // $('#branch').select2({
-    //     dropdownParent: $('#modal-igi'),
-    //     placeholder: 'Pilih Wilayah',
-    //     multiple: false,
-    //     ajax: {
-    //         url: module.base_url + 'api/get-branch.json',
-    //         type: "get",
-    //         dataType: 'json',
-    //         delay: 250,
-    //         data: function(params) {
-    //             var query = {
-    //                 search: params.term,
-    //                 regional: $('#regional').val()
-    //             }
-    //             return query;
-    //         },
-    //         processResults: function(response) {
-    //             return {
-    //                 results: $.map(response.content, function(obj) {
-    //                     return { id: obj.id, text: obj.branch_name };
-    //                 })
-    //             };
-    //         },
-    //         cache: true
-    //     }
-    // })
-
-    var touchtime = 0;
-    $(document).on("click", ".to_scan", function() {
-        if (touchtime == 0) {
-            touchtime = new Date().getTime();
-        } else {
-            if (((new Date().getTime()) - touchtime) < 800) {
-                let this_action = $(this).data('action');
-                window.location.href = this_action;
-                touchtime = 0;
-            } else {
-                touchtime = new Date().getTime();
-            }
+    $('#regional').select2({
+        dropdownParent: $('#modal-wilayah'),
+        placeholder: 'Pilih Regional',
+        multiple: false,
+        ajax: {
+            url: module.base_url + 'api/get-regional.json',
+            type: "get",
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                var query = {
+                    search: params.term
+                }
+                return query;
+            },
+            processResults: function(response) {
+                return {
+                    results: $.map(response.content, function(obj) {
+                        return { id: obj.id, text: obj.regional_name };
+                    })
+                };
+            },
+            cache: true
         }
-    });
-
-    $(document).on('submit', '#form-igi', function(e){
-        e.preventDefault();
-        let uri = new URL($(this).attr('action'));
-
-        let branch_id = $('#branch').val(),
-            regional_desc = $('#regional').text(),
-            branch_desc = $('#branch').text(),
-            delivery_pic = $('#dpic').val(),
-            no_po = $('#po').val(),
-            user_pic = $('#pic').val(),
-            arrival_date = module.convertDate($('#tgl').val()),
-            arrival_total = $('#total').val(),
-            arrival_note = $('#note').val(),
-            url = uri.href,
-            method = uri.pathname === '/arrival_item' ? 'POST' : 'PUT';
-        let jsonData = {
-            branch_id : branch_id,
-            regional_desc : regional_desc,
-            branch_desc : branch_desc,
-            delivery_pic : delivery_pic,
-            no_po : no_po,
-            user_pic : user_pic,
-            arrival_date : arrival_date,
-            arrival_total : arrival_total,
-            arrival_note : arrival_note,
-        }
-
-        // console.log(url, method);
-
-        // console.log(jsonData)
-        module.loading_start();
-        module.callAjax(url, method, jsonData).then(response => {
-            // console.log(response)
-            module.loading_stop();
-            $('#form-igi').trigger('reset');
-            $('#modal-igi').modal('hide')
-            module.send_notif({
-                icon: 'success',
-                message: response.message
-            }).then(() => dt.ajax.reload());
-        }).catch(err => {
-            if ('errors' in err.responseJSON) {
-                const arrError = err.responseJSON.errors;
-                const errr = Object.keys(arrError)
-                errr.map(i => {
-                    let id = '#'+i;
-                    $(id).find('span.text-danger').remove();
-                    $(id).addClass('validation_error')
-                    $(id).append(`<span class="text-danger font-italic">${arrError[i][0]}</span>`)
-                })
-            }
-        });
     })
 
     $('#input_regional').on('click', function(){
@@ -227,5 +130,70 @@ $(document).ready(function () {
         $('#form-regional').trigger('reset');
         $('#modal-regional-title').text('Tambah Data')
         $('#submit').text('Tambah')
-    })
+    });
+
+    $('#input_wilayah').on('click', function(){
+        $('#modal-wilayah').modal('show')
+    });
+    $(document).on('submit', '#form-wilayah', function(e){
+        e.preventDefault();
+        let uri = new URL($(this).attr('action'));
+
+        let regional_id = $('#regional').val(),
+            branch_name = $('#branchname').val(),
+            url = uri.href,
+            method = uri.pathname === '/regional/add/wilayah' ? 'POST' : 'PUT';
+        let jsonData = {
+            regional_id : regional_id,
+            branch_name : branch_name,
+        }
+        module.loading_start();
+        module.callAjax(url, method, jsonData).then(response => {
+            // console.log(response)
+            module.loading_stop();
+            $('#form-wilayah').trigger('reset');
+            $('#regional').val('').trigger('change');
+            $('#modal-wilayah').modal('hide')
+            module.send_notif({
+                icon: 'success',
+                message: response.message
+            });
+            dt.ajax.reload();
+        }).catch(err => {
+            if ('errors' in err.responseJSON) {
+                const arrError = err.responseJSON.errors;
+                const errr = Object.keys(arrError)
+                errr.map(i => {
+                    let id = '#'+i;
+                    $(id).find('span.text-danger').remove();
+                    $(id).addClass('validation_error')
+                    $(id).append(`<span class="text-danger font-italic">${arrError[i][0]}</span>`)
+                })
+            }
+        });
+    });
+
+    $(document).on('click', '.edit-wilayah', function(){
+        let url = new URL($(this).data('href'));
+        let id = url.pathname.split('/')[2];
+        console.log(url, id)
+        module.loading_start();
+        module.callAjax(module.base_url + `regional/detail?id=${id}&q=wilayah`, 'GET').then(response => {
+            let data = response.content;
+            module.loading_stop();
+            $('#branchname').val(data.branch_name);
+        })
+        $('#modal-wilayah').modal('show')
+        $('#form-wilayah').attr('action', $(this).data('href'));
+        $('#modal-wilayah-title').text('Update Data')
+        $('#submit2').text('Update')
+    });
+
+    $('#modal-wilayah').on('hidden.bs.modal', function(){
+        $('#form-wilayah').attr('action', module.base_url + 'regional/add/wilayah');
+        $('#form-wilayah').trigger('reset');
+        $('#regional').val('').trigger('change');
+        $('#modal-wilayah-title').text('Tambah Data')
+        $('#submit2').text('Tambah')
+    });
 });

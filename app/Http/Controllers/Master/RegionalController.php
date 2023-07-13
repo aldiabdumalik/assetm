@@ -63,13 +63,41 @@ class RegionalController extends Controller
         $id = $request->id;
         
         if ($get === 'regional') {
-            $query = Regional::find($id)->first();
+            $query = Regional::find($id);
 
             return thisSuccess('OK', $query);
         }
 
-        $query = Branch::with('regional')->find($id)->first();
+        $query = Branch::with('regional')->find($id);
 
         return thisSuccess('OK', $query);
+    }
+
+    public function branchAdd(Request $request) 
+    {
+        $reg = new Branch();
+        $reg->regional_id = $request->regional_id;
+        $reg->branch_name = $request->branch_name;
+        $reg->save();
+
+        if ($reg) {
+            return thisSuccess('Berhasil menambah data', null, 201);
+        }
+
+        return thisError('Data gagal ditambahkan, periksa kembali form');
+    }
+
+    public function branchEdit($id, Request $request) 
+    {
+        $reg = Branch::find($id);
+        $reg->regional_id = $request->regional_id;
+        $reg->branch_name = $request->branch_name;
+        $reg->save();
+
+        if ($reg) {
+            return thisSuccess('Berhasil mengubah data', null, 201);
+        }
+
+        return thisError('Data gagal diubah, periksa kembali form');
     }
 }
