@@ -30,7 +30,17 @@ class ArrivalItemController extends Controller
     }
 
     public function itemDataDt(Request $request) {
-        $query = ArrivalItem::with('branch.regional', 'user', 'scanningItem')->get();
+        $level = Auth::user()->level;
+        $query = ArrivalItem::with(['branch.regional', 'user', 'scanningItem' => function($q) {
+            $q->where('status', 1);
+        }]);
+        // ->whereRelation('scanningItem', 'status', 1);
+
+        if ($level !== 1) {
+            $query = $query->where('user_id', Auth::user()->id);
+        }
+        
+        $query = $query->get();
 
         return DataTables::of($query)
             ->addColumn('grouping', function($query){

@@ -47,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/scanning/datatable', 'scanDt')->name('scanning.datatable');
         Route::post('/scanning/{id}/add', 'scanItem')->name('scanning.add');
         Route::delete('/scanning/{id}/cancel', 'scanItemCancel')->name('scanning.cancel');
+        Route::get('/scanning/submit', 'updateStatus')->name('scanning.status');
     });
     Route::controller(TestingController::class)->group(function () {
         Route::get('/uji_fungsi', 'index')->name('testing');

@@ -24,6 +24,7 @@ class ScanningController extends Controller
     public function scanDt(Request $request) 
     {
         $query = ScanningItem::with('user', 'arrivalItem', 'itemModel.itemBrand.itemType')
+            ->where('status', $request->status)
             ->where('arrival_item_id', $request->id)
             ->get();
         return DataTables::of($query)
@@ -87,6 +88,17 @@ class ScanningController extends Controller
         }
 
         return thisError('Data gagal dihapus');
+    }
+
+    public function updateStatus()
+    {
+        $query = ScanningItem::where('status', 0)
+            ->where('user_id', Auth::user()->id)
+            ->update([
+                'status' => 1
+            ]);
+
+        return redirect('/arrival_item');
     }
 
 }

@@ -3,7 +3,7 @@
 @section('content')
 <div class="row mb-3">
     <div class="col-4">
-        <a href="{{ route('arrival') }}" class="btn btn-custom"><i class="fa fa-arrow-left"></i> Monitoring</a>
+        <a href="{{ route('scanning.status') }}" class="btn btn-custom"><i class="fa fa-arrow-left"></i> Monitoring</a>
     </div>
 </div>
 <div class="row">

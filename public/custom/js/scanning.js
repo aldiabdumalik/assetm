@@ -10,7 +10,7 @@ $(document).ready(function () {
             method: "POST",
             url: module.base_url + 'scanning/datatable',
             headers: {'X-CSRF-TOKEN': module.header_token},
-            data: {id: url_id}
+            data: {id: url_id, status: 0}
         },
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex', className: 'text-center'},
