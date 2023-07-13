@@ -4,6 +4,7 @@ use App\Http\Controllers\ArrivalItemController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Master\RegionalController as MasterRegional;
+use App\Http\Controllers\Master\UserController as MasterUser;
 use App\Http\Controllers\ScanningController;
 use App\Http\Controllers\TestingController;
 use Illuminate\Support\Facades\Route;
@@ -65,5 +66,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/regional/detail', 'reqDetail')->name('regional.detail');
         Route::post('/regional/add/wilayah', 'branchAdd')->name('regional.add.wilayah');
         Route::put('/regional/{id}/edit/wilayah', 'branchEdit')->name('regional.edit.wilayah');
+    });
+    Route::controller(MasterUser::class)->group(function () {
+        Route::get('/user', 'index')->name('user');
+        Route::post('/user/datatable', 'userDt')->name('user.datatable');
+        Route::post('/user/add', 'userAdd')->name('user.add');
+        Route::put('/user/{id}/edit', 'userEdit')->name('user.edit');
+        Route::delete('/user/{id}/delete', 'userDelete')->name('user.delete');
+        Route::get('/user/detail', 'userDetail')->name('user.detail');
     });
 });
