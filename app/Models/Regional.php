@@ -14,4 +14,9 @@ class Regional extends Model
         'regional_name'
     ];
 
+    public function branch()
+    {
+        return $this->hasMany(Branch::class, 'regional_id', 'id');    
+    }
+
 }

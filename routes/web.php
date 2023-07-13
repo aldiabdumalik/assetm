@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArrivalItemController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Master\RegionalController as MasterRegional;
 use App\Http\Controllers\ScanningController;
 use App\Http\Controllers\TestingController;
 use Illuminate\Support\Facades\Route;
@@ -53,5 +54,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/uji_fungsi/datatable', 'testingDtGroup')->name('testing.scan.datatable.grouping');
         Route::delete('/uji_fungsi/{id}/cancel', 'scanCancel')->name('testing.cancel');
         Route::get('/uji_fungsi/update', 'updateStatus')->name('testing.update');
+    });
+});
+Route::middleware(['auth'])->group(function () {
+    Route::controller(MasterRegional::class)->group(function () {
+        Route::get('/regional', 'index')->name('regional');
+        Route::post('/regional/datatable', 'regionalDt')->name('regional.datatable');
+        Route::post('/regional/add', 'regionalAdd')->name('regional.add');
+        Route::put('/regional/{id}/edit', 'regionalEdit')->name('regional.edit');
+        Route::put('/regional/{id}/edit/wilayah', 'regionalEdit')->name('regional.edit.wilayah');
+        Route::get('/regional/detail', 'reqDetail')->name('regional.detail');
     });
 });
