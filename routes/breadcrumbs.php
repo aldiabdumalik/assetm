@@ -33,3 +33,7 @@ Breadcrumbs::for('user', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('item', function (BreadcrumbTrail $trail) {
     $trail->push('Item', route('item'));
 });
+
+Breadcrumbs::for('packing', function (BreadcrumbTrail $trail) {
+    $trail->push('Packing List', route('packing'));
+});

@@ -21,7 +21,8 @@ class CreatePackingListsTable extends Migration
                 ->nullable();
             $table->foreignId('branch_id')
                 ->nullable();
-            $table->string('pl_code');
+            $table->string('pl_code')
+                ->nullable();
             $table->string('pl_type');
             $table->tinyInteger('pl_status')
                 ->default(0);

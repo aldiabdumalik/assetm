@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Master\RegionalController as MasterRegional;
 use App\Http\Controllers\Master\UserController as MasterUser;
 use App\Http\Controllers\Master\ModelController as MasterItem;
+use App\Http\Controllers\PackingListController;
 use App\Http\Controllers\ScanningController;
 use App\Http\Controllers\TestingController;
 use Illuminate\Support\Facades\Route;
@@ -59,6 +60,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/uji_fungsi/datatable', 'testingDtGroup')->name('testing.scan.datatable.grouping');
         Route::delete('/uji_fungsi/{id}/cancel', 'scanCancel')->name('testing.cancel');
         Route::get('/uji_fungsi/update', 'updateStatus')->name('testing.update');
+    });
+    Route::controller(PackingListController::class)->group(function () {
+        Route::get('/packing_list', 'index')->name('packing');
+        Route::get('/packing_list/detail', 'packingDetail')->name('packing.detail');
+        Route::post('/packing_list/datatable', 'packingDt')->name('packing.datatable');
+        Route::post('/packing_list/add', 'packingAdd')->name('packing.add');
+        Route::put('/packing_list/{id}/edit', 'packingEdit')->name('packing.edit');
+        Route::delete('/packing_list/{id}/delete', 'packingDelete')->name('packing.delete');
     });
 });
 Route::middleware(['auth'])->group(function () {
