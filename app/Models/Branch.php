@@ -12,7 +12,8 @@ class Branch extends Model
 
     protected $fillable = [
         'regional_id',
-        'branch_name'
+        'branch_name',
+        'branch_type'
     ];
 
     public function regional()

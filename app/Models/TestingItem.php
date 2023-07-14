@@ -12,7 +12,8 @@ class TestingItem extends Model
 
     protected $fillable = [
         'user_id',
-        'branch_id',
+        'regional_id',
+        'type_id',
         'model_id',
         'barcode',
         'status',
@@ -29,9 +30,9 @@ class TestingItem extends Model
         return $this->belongsTo(User::class);    
     }
 
-    public function branch()
+    public function regional()
     {
-        return $this->belongsTo(Branch::class);    
+        return $this->belongsTo(Regional::class, 'regional_id');    
     }
 
     public function itemType()

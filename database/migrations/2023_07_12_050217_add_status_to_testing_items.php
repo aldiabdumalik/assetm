@@ -14,7 +14,9 @@ class AddStatusToTestingItems extends Migration
     public function up()
     {
         Schema::table('testing_items', function (Blueprint $table) {
-            $table->tinyInteger('status_scan')->default(0);
+            $table->tinyInteger('status_scan')
+                ->after('status')
+                ->default(0);
         });
     }
 

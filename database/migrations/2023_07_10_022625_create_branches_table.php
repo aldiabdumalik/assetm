@@ -20,6 +20,9 @@ class CreateBranchesTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('branch_name');
+            $table->string('branch_type')
+                ->default('RC')
+                ->nullable();
             $table->timestamps();
         });
     }
