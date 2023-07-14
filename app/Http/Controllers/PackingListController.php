@@ -25,10 +25,13 @@ class PackingListController extends Controller
     public function packingDt(Request $request)
     {
         $user = UserInfo::with('branch')->where('user_id', Auth::user()->id)->first();
-        $query = PackingList::where('branch_id', $user->branch_id)->get();
+        $query = PackingList::with('packingListItem')->where('branch_id', $user->branch_id)->get();
         return DataTables::of($query)
             ->addColumn('jml_item', function($query){
                 return 0;
+            })
+            ->addColumn('jenis', function($query){
+                return $query->pl_type == 'service_handling' ? 'Service Handling' : ucwords($query->pl_type);
             })
             ->addColumn('proses', function($query){
                 if ($query->pl_status == 0) {
@@ -105,5 +108,11 @@ class PackingListController extends Controller
         }
 
         return thisError('Data gagal dihapus');
+    }
+
+    public function scanView($id)
+    {
+        $query = PackingList::with('branch.regional')->find($id);
+        return view('pages.admin.packing.scan', ['id' => $id, 'data' => $query]);
     }
 }

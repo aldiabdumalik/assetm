@@ -1,6 +1,6 @@
 import * as module from './module.js';
 $(document).ready(function () {
-    const dt = $('#packing_table').dataTable({
+    const dt = $('#packing_table').DataTable({
         processing: true,
         serverSide: true,
         destroy: true,
@@ -12,7 +12,7 @@ $(document).ready(function () {
         columns: [
             { data: 'pl_code', name: 'pl_code', className: 'text-center'},
             { data: 'jml_item', name: 'jml_item', className: 'text-right'},
-            { data: 'pl_type', name: 'pl_type', className: 'text-center'},
+            { data: 'jenis', name: 'jenis', className: 'text-center'},
             { data: 'proses', name: 'proses', className: 'text-center'},
             { data: 'action', name: 'action', className: 'text-center'},
         ],
@@ -31,27 +31,16 @@ $(document).ready(function () {
 
         module.loading_start();
         module.callAjax(url, method, jsonData).then(response => {
-            // console.log(response)
+            console.log(response)
             module.loading_stop();
             $('#form-packing').trigger('reset');
             $('#modal-packing').modal('hide')
+            dt.ajax.reload()
             module.send_notif({
                 icon: 'success',
                 message: response.message
             });
-            dt.ajax.reload();
-        }).catch(err => {
-            if ('errors' in err.responseJSON) {
-                const arrError = err.responseJSON.errors;
-                const errr = Object.keys(arrError)
-                errr.map(i => {
-                    let id = '#'+i;
-                    $(id).find('span.text-danger').remove();
-                    $(id).addClass('validation_error')
-                    $(id).append(`<span class="text-danger font-italic">${arrError[i][0]}</span>`)
-                })
-            }
-        });
+        })
     })
 
     $(document).on('click', '.edit-item', function(){
@@ -92,5 +81,8 @@ $(document).ready(function () {
         $('#form-packing').trigger('reset');
         $('#modal-packing-title').text('Buat Packing List')
         $('#submit').text('Tambah')
-    })
+    });
+
+
+    const dtScan = $('#scan_table').DataTable({})
 })

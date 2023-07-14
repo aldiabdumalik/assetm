@@ -68,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/packing_list/add', 'packingAdd')->name('packing.add');
         Route::put('/packing_list/{id}/edit', 'packingEdit')->name('packing.edit');
         Route::delete('/packing_list/{id}/delete', 'packingDelete')->name('packing.delete');
+        Route::get('/packing_list/{id}/scan', 'scanView')->name('packing.scan');
     });
 });
 Route::middleware(['auth'])->group(function () {

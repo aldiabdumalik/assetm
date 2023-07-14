@@ -3,7 +3,7 @@
         <i class="fa fa-ellipsis-v"></i>
     </button>
     <div class="dropdown-menu">
-        <a class="dropdown-item scan-item" href="javascript:void(0)" data-href="{{ route('packing.edit', [$id]) }}">Add Item</a>
+        <a class="dropdown-item scan-item" href="{{ route('packing.scan', [$id]) }}" data-href="{{ route('packing.scan', [$id]) }}">Add Item</a>
         @if ($status == 0)
         <div class="dropdown-divider"></div>
         <a class="dropdown-item edit-item" href="javascript:void(0)" data-href="{{ route('packing.edit', [$id]) }}">Edit</a>

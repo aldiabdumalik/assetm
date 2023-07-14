@@ -18,6 +18,11 @@ class PackingList extends Model
         'pl_status',
     ];
 
+    public function branch() 
+    {
+        return $this->belongsTo(Branch::class);    
+    }
+
     public function packingListItem()
     {
         return $this->hasMany(PackingListItem::class, 'packing_list_id');

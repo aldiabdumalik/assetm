@@ -44,7 +44,7 @@
                     <option value="transfer">Transfer</option>
                     <option value="refurbish">Refurbish</option>
                     <option value="damage">Damage</option>
-                    <option value="service_handling">Service_handling</option>
+                    <option value="service_handling">Service Handling</option>
                 </select>
               </div>
               <div class="col-12 mb-2">

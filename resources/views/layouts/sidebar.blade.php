@@ -62,8 +62,8 @@
                 </li>
 
                 <li>
-                    <a href="{{route('dashboard')}}">
-                        <i class="fi-box"></i> <span> Packing </span>
+                    <a href="{{route('packing')}}">
+                        <i class="fi-box"></i> <span> Packing List</span>
                     </a>
                 </li>
 
