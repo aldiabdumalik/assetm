@@ -66,7 +66,7 @@ class TestingController extends Controller
 
     public function scanItem(UjiFungsiRequest $request) 
     {
-        $query = ScanningItem::with('arrivalItem', 'itemModel.itemBrand.itemType')
+        $query = ScanningItem::with('arrivalItem.branch', 'itemModel.itemBrand.itemType')
             ->where('scan_sn', $request->barcode)
             ->where('status', 1)
             ->first();
@@ -82,7 +82,7 @@ class TestingController extends Controller
 
         $scan = new TestingItem();
         $scan->user_id = Auth::user()->id;
-        $scan->regional_id = $query->arrivalItem->regional_id;
+        $scan->regional_id = $query->arrivalItem->branch->regional_id;
         $scan->type_id = $query->itemModel->itemBrand->itemType->id;
         $scan->model_id = $query->model_id;
         $scan->barcode = $request->barcode;

@@ -10,7 +10,7 @@
             </div>
         </div>
         <footer class="footer">
-            2022 &copy; updu.tech
+            2023 &copy; reza suhendi
         </footer>
     </div>
 </div>

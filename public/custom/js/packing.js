@@ -14,7 +14,9 @@ $(document).ready(function () {
         },
         columns: [
             { data: 'pl_code', name: 'pl_code', className: 'text-center'},
-            { data: 'jml_item', name: 'jml_item', className: 'text-right'},
+            { data: 'packing_list_item', className: 'text-right', render: function ( data, type, row, meta ) {
+                return data.length;
+            }},
             { data: 'jenis', name: 'jenis', className: 'text-center'},
             { data: 'proses', name: 'proses', className: 'text-center'},
             { data: 'action', name: 'action', className: 'text-center'},

@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="m-t-40 text-center">
-        <p class="account-copyright">2022 &copy; updu.tech</p>
+        <p class="account-copyright">2023 &copy; reza suhendi</p>
     </div>
 </div>
 @endsection
