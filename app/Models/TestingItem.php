@@ -33,4 +33,9 @@ class TestingItem extends Model
     {
         return $this->belongsTo(Branch::class);    
     }
+
+    public function itemType()
+    {
+        return $this->belongsTo(ItemType::class, 'type_id');    
+    }
 }

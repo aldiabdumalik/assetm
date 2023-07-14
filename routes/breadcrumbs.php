@@ -20,6 +20,9 @@ Breadcrumbs::for('testing', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('testing.scan', function (BreadcrumbTrail $trail) {
     $trail->push('Actual Scanning', '#');
 });
+Breadcrumbs::for('testing.detail', function (BreadcrumbTrail $trail) {
+    $trail->push('Result Scanning', '#');
+});
 
 Breadcrumbs::for('regional', function (BreadcrumbTrail $trail) {
     $trail->push('Regional', route('regional'));

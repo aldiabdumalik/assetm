@@ -51,10 +51,12 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::controller(TestingController::class)->group(function () {
         Route::get('/uji_fungsi', 'index')->name('testing');
+        // Route::get('/uji_fungsi/datatable', 'index')->name('testing.datatable');
         Route::get('/uji_fungsi/scan', 'scan')->name('testing.scan');
+        Route::get('/uji_fungsi/detail', 'scanDetail')->name('testing.detail');
         Route::post('/uji_fungsi/scan', 'scanItem')->name('testing.scanItem');
         Route::post('/uji_fungsi/scan/datatable', 'testingDt')->name('testing.scan.datatable');
-        Route::get('/uji_fungsi/datatable', 'testingDtGroup')->name('testing.scan.datatable.grouping');
+        Route::post('/uji_fungsi/datatable', 'testingDtGroup')->name('testing.scan.datatable.grouping');
         Route::delete('/uji_fungsi/{id}/cancel', 'scanCancel')->name('testing.cancel');
         Route::get('/uji_fungsi/update', 'updateStatus')->name('testing.update');
     });

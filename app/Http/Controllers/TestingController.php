@@ -8,6 +8,7 @@ use App\Models\TestingItem;
 use App\Models\UserInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class TestingController extends Controller
@@ -19,11 +20,39 @@ class TestingController extends Controller
         return view('pages.admin.uji_fungsi.index', ['branch' => $user->branch->branch_name]);
     }
 
+    function scanDetail()
+    {
+        $user = UserInfo::with('branch')->where('user_id', Auth::user()->id)->first();
+        return view('pages.admin.uji_fungsi.scan_view', ['branch' => $user->branch->branch_name]);
+    }
+
     public function testingDtGroup()
     {
-        $query = TestingItem::with('branch.regional')->get();
+        $query = DB::table('testing_items', 't1')
+            ->leftJoin('item_types as t2', 't2.id', '=', 't1.type_id')
+            ->leftJoin('branches as t3', 't3.id', '=', 't1.branch_id')
+            ->leftJoin('regionals as t4', 't4.id', '=', 't3.regional_id')
+            ->selectRaw('t1.*, t2.type_name, t4.regional_name')
+            ->selectRaw('
+                SUM(
+                    CASE
+                    WHEN t1.status = 1 THEN 1
+                    ELSE 0
+                    END
+                ) AS status_1_count,
+                SUM(
+                    CASE
+                    WHEN t1.status = 0 THEN 1
+                    ELSE 0
+                    END
+                ) AS status_0_count
+            ')
+            ->groupBy('t1.type_id')
+            ->get();
 
-        return $query;
+        return DataTables::of($query)
+            ->addIndexColumn()
+            ->make(true);
     }
 
     public function scan() 
@@ -104,6 +133,15 @@ class TestingController extends Controller
         }
 
         return thisError('Data gagal dihapus');
+    }
+
+    public function sumDt(Request $request)
+    {
+        $query = TestingItem::with('itemType')
+            ->groupBy('type_id')
+            ->get();
+
+        return $query;
     }
 
     public function updateStatus()
