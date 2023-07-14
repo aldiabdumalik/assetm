@@ -28,10 +28,11 @@ class TestingController extends Controller
 
     public function testingDtGroup()
     {
+        $user = UserInfo::with('branch')->where('user_id', Auth::user()->id)->first();
         $query = DB::table('testing_items', 't1')
             ->leftJoin('item_types as t2', 't2.id', '=', 't1.type_id')
-            ->leftJoin('branches as t3', 't3.id', '=', 't1.branch_id')
-            ->leftJoin('regionals as t4', 't4.id', '=', 't3.regional_id')
+            ->leftJoin('regionals as t4', 't4.id', '=', 't1.regional_id')
+            ->leftJoin('user_infos as t5', 't5.user_id', '=', 't1.user_id')
             ->selectRaw('t1.*, t2.type_name, t4.regional_name')
             ->selectRaw('
                 SUM(
@@ -47,6 +48,8 @@ class TestingController extends Controller
                     END
                 ) AS status_0_count
             ')
+            ->where('t1.status_scan', 1)
+            ->where('t5.branch_id', $user->branch_id)
             ->groupBy('t1.type_id')
             ->get();
 
@@ -79,7 +82,7 @@ class TestingController extends Controller
 
         $scan = new TestingItem();
         $scan->user_id = Auth::user()->id;
-        $scan->branch_id = $query->arrivalItem->branch_id;
+        $scan->regional_id = $query->arrivalItem->regional_id;
         $scan->type_id = $query->itemModel->itemBrand->itemType->id;
         $scan->model_id = $query->model_id;
         $scan->barcode = $request->barcode;

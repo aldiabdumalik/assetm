@@ -73,6 +73,12 @@ $(document).ready(function () {
         }
     });
 
+    $('#sn').keyup(module.delay(function (e) {
+        if ($('#sn').val().length >= 5) {
+            $('#form-ujiscan').submit();
+        }
+    }, 1500));
+
     $('#form-ujiscan').on('submit', function(e) {
         e.preventDefault();
 
