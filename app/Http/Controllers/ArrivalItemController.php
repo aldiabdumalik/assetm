@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ArrivalRequest;
 use App\Models\ArrivalItem;
+use App\Models\UserInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -30,17 +31,13 @@ class ArrivalItemController extends Controller
     }
 
     public function itemDataDt(Request $request) {
-        $level = Auth::user()->level;
-        $query = ArrivalItem::with(['branch.regional', 'user', 'scanningItem' => function($q) {
+        $user_id = Auth::user()->id;
+        $userInfo = UserInfo::where('user_id', $user_id)->first();
+        $query = ArrivalItem::with(['branch.regional', 'user.userInfo', 'scanningItem' => function($q) {
             $q->where('status', 1);
-        }]);
-        // ->whereRelation('scanningItem', 'status', 1);
-
-        if ($level !== 1) {
-            $query = $query->where('user_id', Auth::user()->id);
-        }
-        
-        $query = $query->get();
+        }])
+        ->whereRelation('user.userInfo', 'branch_id', $userInfo->branch_id)
+        ->get();
 
         return DataTables::of($query)
             ->addColumn('grouping', function($query){

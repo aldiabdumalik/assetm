@@ -84,6 +84,13 @@ $(document).ready(function () {
         }
     });
 
+    $('#mac').keyup(module.delay(function (e) {
+        console.log($('#mac').val().length);
+        if ($('#mac').val().length >= 5) {
+            $('#form-scan').submit();
+        }
+    }, 1500));
+
     $('#jenis').select2({
         placeholder: 'Pilih Jenis',
         multiple: false,
@@ -163,9 +170,11 @@ $(document).ready(function () {
     })
 
     function resetForm() {
-        $('#form-scan').trigger('reset');
-        $('#jenis').val('').trigger('change');
-        $('#merk').val('').trigger('change');
-        $('#tipe').val('').trigger('change');
+        $('#sn').val(null);
+        $('#mac').val(null);
+        // $('#form-scan').trigger('reset');
+        // $('#jenis').val('').trigger('change');
+        // $('#merk').val('').trigger('change');
+        // $('#tipe').val('').trigger('change');
     }
 });

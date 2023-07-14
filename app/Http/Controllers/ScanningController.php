@@ -6,6 +6,7 @@ use App\Http\Requests\ScanningRequest;
 use App\Models\ArrivalItem;
 use App\Models\ItemType;
 use App\Models\ScanningItem;
+use App\Models\UserInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -18,7 +19,13 @@ class ScanningController extends Controller
             return redirect('/arrival_item');
         }
         $arrival = ArrivalItem::with('branch.regional')->where('id', $id)->first();
-        return view('pages.admin.scanning.index', ['id' => $id, 'data' => $arrival]);
+        $user_id = Auth::user()->id;
+        $userInfo = UserInfo::with('branch.regional')->where('user_id', $user_id)->first();
+        return view('pages.admin.scanning.index', [
+            'id' => $id, 
+            'data' => $arrival,
+            'user' => $userInfo,
+        ]);
     }
 
     public function scanDt(Request $request) 

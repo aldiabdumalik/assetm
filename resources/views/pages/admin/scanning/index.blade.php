@@ -12,7 +12,7 @@
             <div class="form-group row">
                 <label class="col-2 col-form-label">RC</label>
                 <div class="col-4">
-                    <input type="text" class="form-control" readonly value="{{ $data->branch->branch_name }}">
+                    <input type="text" class="form-control" readonly value="{{ $user->branch->branch_name }}">
                 </div>
             </div>
             <div class="form-group row">
