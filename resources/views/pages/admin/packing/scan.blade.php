@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card-box">
-            <form id="form-ujiscan" action="{{route('arrival.add')}}">
+            <form id="form-scan" action="{{route('packing.scan.add', [$id])}}">
                 <div class="row no-gutters">
                     <div class="col-6">
                         <div class="form-group row">
@@ -42,7 +42,7 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Jumlah Item</label>
                             <div class="col-6" id="">
-                                <input type="text" name="rc" class="form-control" autocomplete="off" readonly>
+                                <input type="text" name="rc" class="form-control" autocomplete="off" readonly value="{{ $data->packingListItem->count() == 0 ? null : $data->packingListItem->count() }}">
                             </div>
                         </div>
                     </div>
@@ -65,6 +65,7 @@
                             <th class="text-center">Type</th>
                             <th class="text-center">Scan Time</th>
                             <th class="text-center">Scan By</th>
+                            <th class="text-center"></th>
                             </tr>
                         </thead>
                     </table>

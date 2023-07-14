@@ -69,6 +69,9 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/packing_list/{id}/edit', 'packingEdit')->name('packing.edit');
         Route::delete('/packing_list/{id}/delete', 'packingDelete')->name('packing.delete');
         Route::get('/packing_list/{id}/scan', 'scanView')->name('packing.scan');
+        Route::post('/packing_list/{id}/scan/add', 'scanAdd')->name('packing.scan.add');
+        Route::post('/packing_list/{id}/scan/datatable', 'scanDt')->name('packing.scan.datatable');
+        Route::delete('/packing_list/{id}/scan/delete', 'scanDel')->name('packing.scan.delete');
     });
 });
 Route::middleware(['auth'])->group(function () {

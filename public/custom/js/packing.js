@@ -1,5 +1,8 @@
 import * as module from './module.js';
 $(document).ready(function () {
+    const thisUrl = new URL(window.location.href)
+    const url_id = thisUrl.pathname.split('/')[2];
+    console.log(url_id)
     const dt = $('#packing_table').DataTable({
         processing: true,
         serverSide: true,
@@ -84,5 +87,71 @@ $(document).ready(function () {
     });
 
 
-    const dtScan = $('#scan_table').DataTable({})
+    const dtScan = $('#scan_table').DataTable({
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        ajax: {
+            method: "POST",
+            url: module.base_url + `packing_list/${url_id}/scan/datatable`,
+            headers: {'X-CSRF-TOKEN': module.header_token}
+        },
+        columns: [
+            { data: 'barcode', name: 'barcode', className: 'text-center'},
+            { data: 'jenis', name: 'jenis', className: 'text-center'},
+            { data: 'merk', name: 'merk', className: 'text-center'},
+            { data: 'tipe', name: 'tipe', className: 'text-center'},
+            { data: 'scan_time', name: 'scan_time', className: 'text-center'},
+            { data: 'user.username', name: 'user.username', className: 'text-center'},
+            { data: 'action', name: 'action', className: 'text-center'},
+        ],
+    });
+
+    $(document).on('submit', '#form-scan', function(e){
+        e.preventDefault();
+        let uri = new URL($(this).attr('action'));
+
+        let barcode = $('#sbarcode').val(),
+            url = uri.href,
+            method = 'POST';
+        let jsonData = {
+            barcode : barcode
+        }
+
+        module.loading_start();
+        module.callAjax(url, method, jsonData).then(response => {
+            module.loading_stop();
+            $('#sbarcode').val('');
+            dtScan.ajax.reload()
+        }).catch(err => {
+            $('#sbarcode').val('');
+        });
+    });
+
+    $('#sbarcode').on('keypress', function (e) {
+        if(e.which === 13){
+            $('#form-scan').submit();
+        }
+    });
+
+    $('#sbarcode').keyup(module.delay(function (e) {
+        console.log($('#sbarcode').val().length);
+        if ($('#sbarcode').val().length >= 5) {
+            $('#form-scan').submit();
+        }
+    }, 1500));
+
+    $(document).on('click', '.btn-cancel', function(e) {
+        e.preventDefault();
+        let url = new URL($(this).data('action'));
+        module.loading_start();
+        module.callAjax(url.href, 'DELETE').then(response => {
+            module.loading_stop();
+            // module.send_notif({
+            //     icon: 'success',
+            //     message: response.message
+            // });
+            dtScan.ajax.reload();
+        })
+    });
 })

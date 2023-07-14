@@ -24,4 +24,14 @@ class PackingListItem extends Model
     {
         return $this->belongsTo(PackingList::class);
     }
+
+    public function user() 
+    {
+        return $this->belongsTo(User::class);    
+    }
+
+    public function itemModel() 
+    {
+        return $this->belongsTo(itemModel::class, 'model_id');    
+    }
 }
