@@ -17,4 +17,9 @@ class PackingList extends Model
         'pl_type',
         'pl_status',
     ];
+
+    public function packingListItem()
+    {
+        return $this->hasMany(PackingListItem::class, 'packing_list_id');
+    }
 }

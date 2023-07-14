@@ -97,6 +97,10 @@ class PackingListController extends Controller
         if ($query->pl_status == 0) {
             $query->delete();
 
+            if ($query) {
+                // $delete= 
+            }
+
             return thisSuccess('Data berhasil dihapus');
         }
 

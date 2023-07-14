@@ -69,6 +69,20 @@ $(document).ready(function () {
         $('#submit').text('Update')
     });
 
+    $(document).on('click', '.delete-item', function(e) {
+        e.preventDefault();
+        let url = new URL($(this).data('href'));
+        module.loading_start();
+        module.callAjax(url.href, 'DELETE').then(response => {
+            module.loading_stop();
+            module.send_notif({
+                icon: 'success',
+                message: response.message
+            });
+            dt.ajax.reload();
+        })
+    });
+
     $('#btn-add').on('click', function(){
         $('#modal-packing').modal('show')
     })
