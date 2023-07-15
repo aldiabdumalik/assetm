@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArrivalItemController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\Master\RegionalController as MasterRegional;
 use App\Http\Controllers\Master\UserController as MasterUser;
 use App\Http\Controllers\Master\ModelController as MasterItem;
@@ -72,6 +73,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/packing_list/{id}/scan/add', 'scanAdd')->name('packing.scan.add');
         Route::post('/packing_list/{id}/scan/datatable', 'scanDt')->name('packing.scan.datatable');
         Route::delete('/packing_list/{id}/scan/delete', 'scanDel')->name('packing.scan.delete');
+    });
+    Route::controller(DeliveryController::class)->group(function () {
+        Route::get('/pengiriman', 'index')->name('pengiriman');
+        Route::post('/pengiriman/add', 'buatPengiriman')->name('pengiriman.add');
+        Route::get('/pengiriman/{id}/view', 'pengirimanView')->name('pengiriman.view');
     });
 });
 Route::middleware(['auth'])->group(function () {

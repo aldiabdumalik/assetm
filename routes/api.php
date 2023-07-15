@@ -22,6 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::controller(RegionalController::class)->group(function () {
     Route::get('/get-regional.json', 'getRegional')->name('api.regional');
     Route::get('/get-branch.json', 'getBranch')->name('api.branch');
+    Route::get('/get-branch-type.json', 'getBranchType')->name('api.branch.type');
 });
 Route::controller(ModelController::class)->group(function () {
     Route::get('/get-jenis.json', 'getJenis')->name('api.jenis');

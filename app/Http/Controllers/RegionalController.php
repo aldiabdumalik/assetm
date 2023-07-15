@@ -47,4 +47,22 @@ class RegionalController extends Controller
 
         return thisError('Hmmm access denied', null, 401);
     }
+
+    public function getBranchType(Request $request) {
+        if ($request->ajax()) {
+            $search = $request->search;
+
+            $branch = Branch::where('branch_type', $request->branch_type)->limit(5);
+
+            if (isset($search)) {
+                $branch->where('branch_name', 'LIKE', "%$search%");
+            }
+
+            $result = $branch->get();
+
+            return thisSuccess('ok', $result, 200);
+        }
+
+        return thisError('Hmmm access denied', null, 401);
+    }
 }

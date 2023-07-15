@@ -21,9 +21,11 @@ class CreateDeliveriesTable extends Migration
                 ->nullable();
             $table->foreignId('user_id')
                 ->nullable();
-            $table->string('delivery_no');
+            $table->string('delivery_no')
+                ->nullable();
             $table->string('delivery_resi');
-            $table->integer('jml_item');
+            $table->integer('jml_item')
+                ->nullable();
             $table->date('estimasi');
             $table->timestamps();
         });

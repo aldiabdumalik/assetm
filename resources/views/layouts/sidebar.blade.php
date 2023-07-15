@@ -68,6 +68,12 @@
                 </li>
 
                 <li>
+                    <a href="{{route('packing')}}">
+                        <i class="fi-location"></i> <span> Pengiriman</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="{{route('dashboard')}}">
                         <i class="fi-download"></i> <span> Report </span>
                     </a>
