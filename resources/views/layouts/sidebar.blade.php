@@ -74,7 +74,7 @@
                 </li>
 
                 <li>
-                    <a href="{{route('dashboard')}}">
+                    <a href="{{route('reporting')}}">
                         <i class="fi-download"></i> <span> Report </span>
                     </a>
                 </li>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Master\RegionalController as MasterRegional;
 use App\Http\Controllers\Master\UserController as MasterUser;
 use App\Http\Controllers\Master\ModelController as MasterItem;
 use App\Http\Controllers\PackingListController;
+use App\Http\Controllers\ReportingController;
 use App\Http\Controllers\ScanningController;
 use App\Http\Controllers\TestingController;
 use Illuminate\Support\Facades\Route;
@@ -87,6 +88,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/pengiriman/{id}/add_pl', 'addPl')->name('pengiriman.add_pl');
         Route::post('/pengiriman/{id}/del_pl', 'delPl')->name('pengiriman.del_pl');
         Route::post('/pengiriman/{id}/send_pl', 'sendDelivery')->name('pengiriman.send_pl');
+    });
+    Route::controller(ReportingController::class)->group(function () {
+        Route::get('/reporting', 'index')->name('reporting');
     });
 });
 Route::middleware(['auth'])->group(function () {
