@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{asset('templates/assets/images/favicon.ico')}}">
+    <link rel="shortcut icon" href="{{asset('files/img/inti.png')}}">
     {{-- Other css --}} 
     <link href="{{asset('templates/plugins/spinkit/spinkit.css')}}" rel="stylesheet" />
     {{-- <link href="{{asset('templates/plugins/dropify/css/dropify.min.css')}}" rel="stylesheet" type="text/css" /> --}}

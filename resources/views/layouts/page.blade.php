@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('page', 'account-pages')
 @section('layout')
-<div class="accountbg" style="background: url('{{asset('files/img/bg-1s.jpg')}}');background-size: cover;background-position: center;"></div>
+<div class="accountbg" style="background: url('{{asset('files/img/bg-new.jpg')}}');background-size: cover;background-position: center;"></div>
 <div class="wrapper-page account-page-full">
     <div class="card">
         <div class="card-block">

@@ -3,7 +3,7 @@
 @section('content')
 <h2 class="text-uppercase text-center pb-4">
     <a href="#" class="text-success">
-        <img src="{{asset('templates/assets/images/laravel.svg')}}" alt="" class="img-responsive">
+        <img src="{{asset('files/img/inti.png')}}" width="80" alt="" class="img-responsive">
     </a>
 </h2>
 

@@ -42,4 +42,15 @@
 @endsection
 @push('page-js')
     <script type="module" src="{{asset('custom/js/reporting.js')}}"></script>
+    <script type="module">
+        import * as module from './custom/js/module.js';
+        $(document).ready(function () {
+            @if(Session::has('errorMsg') != '')
+                module.send_notif({
+                    icon: 'error',
+                    message: `{!! Session::get('errorMsg') !!}`
+                })
+            @endif
+        })
+    </script>
 @endpush

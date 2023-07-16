@@ -4,10 +4,10 @@
         <div class="topbar-left">
             <a href="#" class="logo">
                 <span>
-                    <img src="{{asset('templates/assets/images/laravel.svg')}}" alt="" height="35">
+                    <img src="{{asset('files/img/inti.png')}}" alt="" height="35">
                 </span>
                 <i>
-                    <img src="{{asset('templates/assets/images/laravel.svg')}}" alt="" height="28">
+                    <img src="{{asset('files/img/inti.png')}}" alt="" height="28">
                 </i>
             </a>
         </div>
