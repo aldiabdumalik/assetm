@@ -82,11 +82,24 @@ $(document).ready(function () {
         })
     })
 
-    // $('#barcode_scan').on('keypress', function (e) {
-    //     if(e.which === 13){
-    //         $('#form-scan').submit();
-    //     }
-    // });
+    $('#form-update').on('submit', function(e){
+        e.preventDefault();
+        let url = new URL($(this).attr('action'));
+        let barcode = $('#barcode').val();
+        let model_id = $('#tipe').val();
+        module.loading_start();
+        module.callAjax(url.href, "POST", {barcode: barcode, model_id: model_id}).then(response => {
+            module.loading_stop();
+            $('#barcode').val('')
+            $('#jenis').val('').trigger('change');
+            $('#merk').val('').trigger('change');
+            $('#tipe').val('').trigger('change');
+            module.send_notif({
+                icon: 'success',
+                message: response.message
+            }).then(() => window.location.reload());
+        })
+    });
 
     // $('#barcode_scan').keyup(module.delay(function (e) {
     //     // console.log($('#barcode_scan').val().length);
