@@ -36,24 +36,29 @@ class PackingListController extends Controller
                 return $query->pl_type == 'service_handling' ? 'Service Handling' : ucwords($query->pl_type);
             })
             ->addColumn('proses', function($query){
+                $status = '';
+                $warna = '';
                 if ($query->pl_status == 0) {
-                    return 'Belum masuk pengiriman';
+                    $status = 'Belum masuk pengiriman';
+                    $warna = 'badge-info';
                 }
 
                 if ($query->pl_status == 1) {
-                    return 'Belum dikirim';
+                    $status= 'Belum dikirim';
+                    $warna = 'badge-danger';
                 }
 
                 if ($query->pl_status == 2) {
-                    return 'Sudah dikirim';
+                    $status= 'Sudah dikirim';
+                    $warna = 'badge-success';
                 }
 
-                return $query->pl_status;
+                return view('pages.admin.packing.components.badge', compact('status', 'warna'));
             })
             ->addColumn('action', function($query){
                 return view('pages.admin.packing.components.action', ['id' => $query->id, 'status' => $query->pl_status]);
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'proses'])
             ->addIndexColumn()
             ->make(true);
     }

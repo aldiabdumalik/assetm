@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 @section('title', 'Kirim Packing List')
 @section('content')
+<div class="row mb-3">
+    <div class="col-4">
+        <a href="{{ route('pengiriman') }}" class="btn btn-custom"><i class="fa fa-arrow-left"></i> Monitoring</a>
+    </div>
+</div>
 <div class="row">
     <div class="col-12">
         <div class="card-box">

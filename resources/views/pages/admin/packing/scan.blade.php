@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 @section('title', 'Packing List Items')
 @section('content')
+<div class="row mb-3">
+    <div class="col-4">
+        <a href="{{ route('packing') }}" class="btn btn-custom"><i class="fa fa-arrow-left"></i> Monitoring</a>
+    </div>
+</div>
 <div class="row">
     <div class="col-12">
         <div class="card-box">
@@ -25,12 +30,14 @@
                                 <input type="text" name="rc" class="form-control" autocomplete="off" readonly value="{{$data->pl_code}}">
                             </div>
                         </div>
+                        @if ($data->pl_status !== 2)
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Scan Barcode</label>
                             <div class="col-6" id="barcode">
                                 <input type="text" name="sbarcode" id="sbarcode" class="form-control" autocomplete="off" required>
                             </div>
                         </div>
+                        @endif
                     </div>
                     <div class="col-6">
                         <div class="form-group row">
