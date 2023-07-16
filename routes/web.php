@@ -78,12 +78,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/pengiriman', 'index')->name('pengiriman');
         Route::post('/pengiriman/datatable', 'deliveryDt')->name('pengiriman.dt');
         Route::get('/pengiriman/{id}/detail', 'deliveryDetail')->name('pengiriman.detail');
+        Route::put('/pengiriman/{id}/edit', 'deliveryEdit')->name('pengiriman.edit');
+        Route::delete('/pengiriman/{id}/delete', 'deliveryDelete')->name('pengiriman.delete');
         Route::post('/pengiriman/add', 'buatPengiriman')->name('pengiriman.add');
         Route::get('/pengiriman/{id}/view', 'pengirimanView')->name('pengiriman.view');
         Route::post('/pengiriman/belum_dt', 'belumDt')->name('pengiriman.belum_dt');
         Route::post('/pengiriman/{id}/donedt', 'doneDt')->name('pengiriman.done.dt');
         Route::post('/pengiriman/{id}/add_pl', 'addPl')->name('pengiriman.add_pl');
         Route::post('/pengiriman/{id}/del_pl', 'delPl')->name('pengiriman.del_pl');
+        Route::post('/pengiriman/{id}/send_pl', 'sendDelivery')->name('pengiriman.send_pl');
     });
 });
 Route::middleware(['auth'])->group(function () {

@@ -73,6 +73,21 @@ $(document).ready(function () {
         })
     })
 
+    $('#btn-kirim').on('click', function(e) {
+        e.preventDefault();
+        // console.log('test')
+        module.loading_start();
+        module.callAjax(module.base_url + `pengiriman/${url_id}/send_pl`, 'POST').then(response => {
+            module.loading_stop();
+            module.send_notif({
+                icon: 'success',
+                message: response.message
+            });
+            window.location.reload();
+            // dt.ajax.reload();
+        })
+    });
+
 
     $(document).on('click', '.add-pl', function(e){
         e.preventDefault();

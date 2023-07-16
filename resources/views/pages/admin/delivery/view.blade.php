@@ -51,6 +51,13 @@
                                 <input type="text" name="rc" class="form-control" autocomplete="off" readonly value="{{ date('d/m/Y', strtotime($data->estimasi)) }}">
                             </div>
                         </div>
+                        @if ($data->status == 0)
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="button" id="btn-kirim" class="btn btn-custom btn-block">Proses Kirim</button>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </form>
@@ -58,6 +65,7 @@
     </div>
 </div>
 <div class="row">
+    @if ($data->status == 0)
     <div class="col-6">
         <div class="card-box">
             <div class="table-rep-plugin mt-5">
@@ -77,7 +85,8 @@
 
         </div>
     </div>
-    <div class="col-6">
+    @endif
+    <div class="{{ $data->status == 0 ? 'col-6' : 'col-12' }}">
         <div class="card-box">
             <div class="table-rep-plugin mt-5">
                 <div class="table-responsive" data-pattern="priority-columns">

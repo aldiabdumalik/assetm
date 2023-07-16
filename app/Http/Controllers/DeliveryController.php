@@ -76,6 +76,66 @@ class DeliveryController extends Controller
         return thisError('Gagal membuat pengiriman');
     }
 
+    public function sendDelivery($id)
+    {
+        $pengiriman = Delivery::find($id);
+        $pengiriman->status = 1;
+        $pengiriman->save();
+
+        $item = DeliveryItem::where('delivery_id', $id)->get();
+
+        if (!empty($item)) {
+            foreach ($item as $v) {
+                $packing = PackingList::find($v->packing_list_id);
+                $packing->pl_status = 2;
+                $packing->save();
+
+                $items = PackingListItem::where('packing_list_id', $v->packing_list_id)
+                    ->update([
+                        'delivery_status' => 2
+                    ]);
+            }
+        }
+
+        $upitem = DeliveryItem::where('delivery_id', $id)->update([
+            'status' => 1
+        ]);
+
+        if ($pengiriman) {
+            return thisSuccess('Packing List berhasil dikirim');
+        }
+        return thisError('Packing List gagal dikirim');
+    }
+
+    public function deliveryEdit($id, Request $request)
+    {
+        $pengiriman = Delivery::find($id);
+        $pengiriman->delivery_branch_id = $request->tujuan;
+        $pengiriman->user_id = Auth::user()->id;
+        // $pengiriman->delivery_no = '';
+        $pengiriman->delivery_resi = $request->resi;
+        $pengiriman->estimasi = $request->estimasi;
+        $pengiriman->save();
+
+        if ($pengiriman) {
+            return thisSuccess('Detail pengiriman berhasil diupdate');
+        }
+
+        return thisError('Gagal update pengiriman');
+    }
+
+    public function deliveryDelete($id)
+    {
+        $pengiriman = Delivery::find($id);
+
+        if ($pengiriman->status == 1) {
+            return thisError('Pengriman ini tidak dapat dihapus');
+        }
+
+        $pengiriman->delete();
+        return thisSuccess('Berhasil menghapus pengiriman');
+    }
+
     public function pengirimanView($id)
     {
         $query = Delivery::with('branchDelivery')->find($id);
@@ -126,7 +186,7 @@ class DeliveryController extends Controller
                 return $query->pl_type == 'service_handling' ? 'Service Handling' : ucwords($query->pl_type);
             })
             ->addColumn('action', function($query){
-                return view('pages.admin.delivery.components.del', ['id' => $query->id]);
+                return $query->pl_status == 2 ? '' : view('pages.admin.delivery.components.del', ['id' => $query->id]);
             })
             ->rawColumns(['action'])
             ->addIndexColumn()

@@ -2,6 +2,11 @@ import * as module from './module.js';
 $(document).ready(function () {
     const thisUrl = new URL(window.location.href)
     const url_id = thisUrl.pathname.split('/')[2];
+    $('.this_datepicker').datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        format: 'dd/mm/yyyy',
+    })
     // console.log(url_id)
     const dt = $('#pengiriman_table').DataTable({
         processing: true,
@@ -41,12 +46,17 @@ $(document).ready(function () {
             module.loading_stop();
             $('#form-pengiriman').trigger('reset');
             $('#tujuan').val('').trigger('change')
-            // $('#modal-pengiriman').modal('hide')
-            // dt.ajax.reload()
+            $('#modal-pengiriman').modal('hide');
+            dt.ajax.reload()
+            let res = response.content;
             module.send_notif({
                 icon: 'success',
                 message: response.message
-            }).then(() => window.location.href = response.content.redirect);
+            }).then(() => {
+                if (res != null) {
+                    return window.location.href = response.content.redirect
+                }
+            });
         })
     });
 
@@ -79,7 +89,20 @@ $(document).ready(function () {
         $('#submit').text('Buat')
     })
 
-
+    $(document).on('click', '.delete-item', function(e) {
+        e.preventDefault();
+        let url = new URL($(this).data('href'));
+        module.loading_start();
+        module.callAjax(url.href, 'DELETE').then(response => {
+            module.loading_stop();
+            module.send_notif({
+                icon: 'success',
+                message: response.message
+            });
+            dt.ajax.reload();
+        })
+    });
+    
     $('#btn-add').on('click', function(){
         $('#modal-pengiriman').modal('show')
     });
