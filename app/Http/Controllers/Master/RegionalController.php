@@ -78,6 +78,7 @@ class RegionalController extends Controller
         $reg = new Branch();
         $reg->regional_id = $request->regional_id;
         $reg->branch_name = $request->branch_name;
+        $reg->branch_type = $request->branch_type;
         $reg->save();
 
         if ($reg) {
@@ -92,6 +93,7 @@ class RegionalController extends Controller
         $reg = Branch::find($id);
         $reg->regional_id = $request->regional_id;
         $reg->branch_name = $request->branch_name;
+        $reg->branch_type = $request->branch_type;
         $reg->save();
 
         if ($reg) {

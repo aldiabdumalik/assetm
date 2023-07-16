@@ -78,6 +78,13 @@
                   <label for="branchname">Nama Wilayah</label>
                   <input type="text" name="branchname" id="branchname" class="form-control" autocomplete="off" required>
               </div>
+              <div id="branch_type" class="col-12 mb-2">
+                <label for="type">Tipe Wilayah</label>
+                <select name="type" id="type" class="form-control" required>
+                  <option value="RC">RC</option>
+                  <option value="WHOS">WHOS</option>
+                </select>
+            </div>
               <div class="col-12 mb-2">
                   <button type="submit" id="submit2" class="btn btn-custom btn-block">Tambah</button>
               </div>

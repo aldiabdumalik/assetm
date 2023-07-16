@@ -141,11 +141,13 @@ $(document).ready(function () {
 
         let regional_id = $('#regional').val(),
             branch_name = $('#branchname').val(),
+            branch_type = $('#type').val(),
             url = uri.href,
             method = uri.pathname === '/regional/add/wilayah' ? 'POST' : 'PUT';
         let jsonData = {
             regional_id : regional_id,
             branch_name : branch_name,
+            branch_type : branch_type,
         }
         module.loading_start();
         module.callAjax(url, method, jsonData).then(response => {
@@ -182,6 +184,12 @@ $(document).ready(function () {
             let data = response.content;
             module.loading_stop();
             $('#branchname').val(data.branch_name);
+            $('#type').val(data.branch_type);
+
+            var regional = new Option(data.regional.regional_name, data.regional.id);
+            regional.selected = true;
+            $("#regional").append(regional);
+            $("#regional").trigger("change");
         })
         $('#modal-wilayah').modal('show')
         $('#form-wilayah').attr('action', $(this).data('href'));
