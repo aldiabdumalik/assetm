@@ -27,4 +27,9 @@ class PackingList extends Model
     {
         return $this->hasMany(PackingListItem::class, 'packing_list_id');
     }
+
+    public function delivery()
+    {
+        return $this->belongsToMany(Delivery::class, 'delivery_items');
+    }
 }

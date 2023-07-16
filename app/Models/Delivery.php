@@ -19,13 +19,18 @@ class Delivery extends Model
         'estimasi',
     ];
 
-    public function packingList()
-    {
-        return $this->belongsTo(PackingList::class);
-    }
-
     public function branchDelivery()
     {
         return $this->belongsTo(Branch::class, 'delivery_branch_id', 'id');
+    }
+
+    public function deliveryItem()
+    {
+        return $this->hasMany(DeliveryItem::class, 'delivery_id', 'id');    
+    }
+
+    public function packingList()
+    {
+        return $this->belongsToMany(PackingList::class, 'delivery_items');    
     }
 }

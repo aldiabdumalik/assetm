@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Delivery;
+use App\Models\DeliveryItem;
+use App\Models\PackingList;
+use App\Models\PackingListItem;
+use App\Models\UserInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
 
 class DeliveryController extends Controller
 {
@@ -27,7 +32,7 @@ class DeliveryController extends Controller
             $update = Delivery::find($pengiriman->id);
             $update->delivery_no = str_pad($pengiriman->id, 5, '0', STR_PAD_LEFT).'/'.$request->type.$request->tujuan.'/'.date('m/Y');
             $update->save();
-            
+
             return thisSuccess('Tunggu sebentar Anda akan di arahkan ke halaman tambah packing list', ['redirect' => route('pengiriman.view', [$pengiriman->id])]);
         }
 
@@ -36,6 +41,112 @@ class DeliveryController extends Controller
 
     public function pengirimanView($id)
     {
-        return false;
+        $query = Delivery::with('branchDelivery')->find($id);
+        $user = UserInfo::with('branch.regional')->where('user_id', Auth::user()->id)->first();
+        // return $user;
+        return view('pages.admin.delivery.view', [
+            'user_branch' => $user->branch->branch_name,
+            'user_regional' => $user->branch->regional->regional_name,
+            'data' => $query
+        ]);
+    }
+
+    public function belumDt(Request $request)
+    {
+        $user = UserInfo::with('branch')->where('user_id', Auth::user()->id)->first();
+        $query = PackingList::with('packingListItem')
+            ->has('packingListItem')
+            ->where('pl_status', 0)
+            ->where('branch_id', $user->branch_id)
+            ->get();
+        return DataTables::of($query)
+            ->addColumn('jml_item', function($query){
+                return $query->packingListItem->count();
+            })
+            ->addColumn('jenis', function($query){
+                return $query->pl_type == 'service_handling' ? 'Service Handling' : ucwords($query->pl_type);
+            })
+            ->addColumn('action', function($query){
+                return view('pages.admin.delivery.components.add', ['id' => $query->id]);
+            })
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);    
+    }
+
+    public function doneDt($id, Request $request)
+    {
+        // $user = UserInfo::with('branch')->where('user_id', Auth::user()->id)->first();
+        $query = PackingList::with(['delivery', 'packingListItem'])
+            ->whereRelation('delivery', 'deliveries.id', $id)
+            ->get();
+        // return $query;
+        return DataTables::of($query)
+            ->addColumn('jml_item', function($query){
+                return $query->packingListItem->count();
+            })
+            ->addColumn('jenis', function($query){
+                return $query->pl_type == 'service_handling' ? 'Service Handling' : ucwords($query->pl_type);
+            })
+            ->addColumn('action', function($query){
+                return view('pages.admin.delivery.components.del', ['id' => $query->id]);
+            })
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);    
+    }
+
+    public function addPl($id, Request $request)
+    {
+        $packing = PackingList::find($id);
+        $packing->pl_status = 1;
+        $packing->save();
+
+        if ($packing) {
+            $items = PackingListItem::where('packing_list_id', $id)
+                ->update([
+                    'delivery_status' => 1
+                ]);
+
+            if ($items) {
+                $delivery = new DeliveryItem();
+
+                $delivery->user_id = Auth::user()->id;
+                $delivery->delivery_id = $request->delivery_id;
+                $delivery->packing_list_id = $id;
+                $delivery->save();
+
+                return thisSuccess('OK');
+            }
+
+        }
+
+        return thisError('Gagal menambah PL');
+    }
+
+    public function delPl($id, Request $request)
+    {
+        $packing = PackingList::find($id);
+        $packing->pl_status = 0;
+        $packing->save();
+
+        if ($packing) {
+            $items = PackingListItem::where('packing_list_id', $id)
+                ->update([
+                    'delivery_status' => 0
+                ]);
+            
+            $delivery = DeliveryItem::where('delivery_id', $request->delivery_id)->delete();
+            // $delivery->delete();
+
+            return thisSuccess('OK');
+        }
+
+        return thisError('Gagal membatalkan PL');
+    }
+
+    public function sendPl($id)
+    {
+
     }
 }

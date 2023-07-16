@@ -43,3 +43,6 @@ Breadcrumbs::for('packing.scan', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('pengiriman', function (BreadcrumbTrail $trail) {
     $trail->push('Pengiriman', route('pengiriman'));
 });
+Breadcrumbs::for('pengiriman.view', function (BreadcrumbTrail $trail) {
+    $trail->push('Pengiriman', route('pengiriman'));
+});
