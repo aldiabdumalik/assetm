@@ -4,6 +4,9 @@ use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('dashboard'));
 });
+Breadcrumbs::for('revisi', function (BreadcrumbTrail $trail) {
+    $trail->push('Koreksi Barcode', route('revisi'));
+});
 Breadcrumbs::for('dashboard.index', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('dashboard.index'));
 });

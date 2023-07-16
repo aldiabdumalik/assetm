@@ -34,4 +34,14 @@ class ScanningItem extends Model
     {
         return $this->belongsTo(itemModel::class, 'model_id', 'id');
     }
+
+    public function ujiFungsi()
+    {
+        return $this->belongsTo(TestingItem::class, 'scan_sn', 'barcode');    
+    }
+
+    public function packingListItem()
+    {
+        return $this->belongsTo(PackingListItem::class, 'scan_sn', 'barcode');    
+    }
 }

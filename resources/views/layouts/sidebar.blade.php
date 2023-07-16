@@ -36,6 +36,12 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{route('revisi')}}">
+                        <i class="fa fa-edit"></i> <span> Koreksi Barcode </span>
+                    </a>
+                </li>
+
                 @if (auth()->user()->level == 1)
                     
                 <li>
