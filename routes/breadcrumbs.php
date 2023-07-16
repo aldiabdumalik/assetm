@@ -13,6 +13,9 @@ Breadcrumbs::for('arrival', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('scanning', function (BreadcrumbTrail $trail) {
     $trail->push('Actual Scanning', '#');
 });
+Breadcrumbs::for('scanning.view', function (BreadcrumbTrail $trail) {
+    $trail->push('Result Scanning', '#');
+});
 
 Breadcrumbs::for('testing', function (BreadcrumbTrail $trail) {
     $trail->push('AMS Uji Fungsi', '#');

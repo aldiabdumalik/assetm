@@ -18,7 +18,7 @@ $(document).ready(function () {
         columns: [
             { data: 'grouping', name: 'grouping', className: 'text-center'},
             { data: 'arrival_date', name: 'arrival_date', className: 'text-center'},
-            { data: 'surat_jalan', name: 'surat_jalan', className: 'text-center'},
+            // { data: 'surat_jalan', name: 'surat_jalan', className: 'text-center'},
             { data: 'arrival_total', name: 'arrival_total', className: 'text-right'},
             { data: 'scanning_item', className: 'text-right', render: function ( data, type, row, meta ) {
                 // console.log(data.length)

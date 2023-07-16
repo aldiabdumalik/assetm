@@ -25,6 +25,29 @@ $(document).ready(function () {
         ],
     });
 
+    const dt2 = $('#scanview_table').DataTable({
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        ajax: {
+            method: "POST",
+            url: module.base_url + 'scanning/datatable',
+            headers: {'X-CSRF-TOKEN': module.header_token},
+            data: {id: url_id, status: 1}
+        },
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex', className: 'text-center'},
+            { data: 'scan_time', name: 'scan_time', className: 'text-center'},
+            { data: 'scan_sn', name: 'scan_sn', className: 'text-center'},
+            { data: 'scan_mac', name: 'scan_mac', className: 'text-center'},
+            { data: 'jenis', name: 'jenis', className: 'text-center'},
+            { data: 'merk', name: 'merk', className: 'text-center'},
+            { data: 'tipe', name: 'tipe', className: 'text-center'},
+            { data: 'scan_box', name: 'scan_box', className: 'text-center'},
+            { data: 'action', name: 'action', className: 'text-center'},
+        ],
+    });
+
     $('#form-scan').on('submit', function(e) {
         e.preventDefault();
         let url = new URL($(this).attr('action'));

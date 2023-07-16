@@ -28,6 +28,21 @@ class ScanningController extends Controller
         ]);
     }
 
+    public function scanView($id) 
+    {
+        if (!isset($id)) {
+            return redirect('/arrival_item');
+        }
+        $arrival = ArrivalItem::with('branch.regional')->where('id', $id)->first();
+        $user_id = Auth::user()->id;
+        $userInfo = UserInfo::with('branch.regional')->where('user_id', $user_id)->first();
+        return view('pages.admin.scanning.view', [
+            'id' => $id, 
+            'data' => $arrival,
+            'user' => $userInfo,
+        ]);
+    }
+
     public function scanDt(Request $request) 
     {
         $query = ScanningItem::with('user', 'arrivalItem', 'itemModel.itemBrand.itemType')
@@ -48,7 +63,7 @@ class ScanningController extends Controller
                 return $query->itemModel->model_name;
             })
             ->addColumn('action', function($query){
-                return view('pages.admin.scanning.components.action', ['id' => $query->id]);
+                return $query->status == 1 ? '' : view('pages.admin.scanning.components.action', ['id' => $query->id]);
             })
             ->rawColumns(['action'])
             ->addIndexColumn()

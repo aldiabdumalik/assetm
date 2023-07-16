@@ -3,9 +3,11 @@
         <i class="fa fa-ellipsis-v"></i>
     </button>
     <div class="dropdown-menu">
-        <a class="dropdown-item edit-item" href="javascript:void(0)" data-href="{{ route('arrival.edit', [$id]) }}">Edit</a>
+        <a class="dropdown-item" href="{{ route('scanning.view', [$id]) }}" data-href="{{ route('scanning.view', [$id]) }}">View</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="javascript:void(0)" data-href="{{ route('arrival.edit', [$id]) }}">Upload</a>
+        <a class="dropdown-item edit-item" href="javascript:void(0)" data-href="{{ route('arrival.edit', [$id]) }}">Edit</a>
+        {{-- <div class="dropdown-divider"></div> --}}
+        {{-- <a class="dropdown-item" href="javascript:void(0)" data-href="{{ route('arrival.edit', [$id]) }}">Upload</a> --}}
         {{-- <div class="dropdown-divider"></div> --}}
     </div>
 </div>

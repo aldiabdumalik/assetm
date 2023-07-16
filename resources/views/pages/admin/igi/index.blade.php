@@ -15,7 +15,7 @@
               <tr>
                 <th class="text-center">Regional</th>
                 <th class="text-center">TGL.DATANG</th>
-                <th class="text-center">Surat Jalan</th>
+                {{-- <th class="text-center">Surat Jalan</th> --}}
                 <th class="text-center">TOTAL BAPB</th>
                 <th class="text-center">TOTAL SCAN</th>
                 <th class="text-center">ACTION</th>
