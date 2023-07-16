@@ -68,7 +68,7 @@
                 </li>
 
                 <li>
-                    <a href="{{route('packing')}}">
+                    <a href="{{route('pengiriman')}}">
                         <i class="fi-location"></i> <span> Pengiriman</span>
                     </a>
                 </li>

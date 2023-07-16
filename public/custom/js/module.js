@@ -57,7 +57,11 @@ export function htmlDecode(input){
 export function convertDate(tgl, format='d/m/y'){
     if (format=='d/m/y') {
         tgl = tgl.split('/').reverse().join('-')
+    }else{
+        tgl = tgl.split('-').reverse().join('/')
     }
+
+    console.log(tgl, format)
 
     return tgl;
 }

@@ -18,6 +18,43 @@ class DeliveryController extends Controller
         return view('pages.admin.delivery.index');    
     }
 
+    public function deliveryDt(Request $request) 
+    {
+        $query = Delivery::with(['packingList', 'branchDelivery', 'deliveryItem'])
+            ->get();
+        // $chek = DeliveryItem::where('delivery_id', )
+        // return $query;
+        return DataTables::of($query)
+            ->addColumn('jml_pl', function($query){
+                return $query->packingList->count();
+            })
+            ->addColumn('status_string', function($query){
+                $status = $query->status == 0 ? 'Belum dikirim':'Sudah dikirim';
+                $warna = $query->status == 0 ? 'badge-danger':'badge-success';
+                return view('pages.admin.delivery.components.badge', compact('status', 'warna'));
+            })
+            ->addColumn('tujuan', function($query){
+                return $query->branchDelivery->branch_type.' '.$query->branchDelivery->branch_name;
+            })
+            ->addColumn('action', function($query){
+                return view('pages.admin.delivery.components.action', [
+                    'id' => $query->id,
+                    'status' => $query->status
+                ]);
+            })
+            ->rawColumns(['action', 'status_string'])
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function deliveryDetail($id) 
+    {
+        $query = Delivery::with(['packingList', 'branchDelivery', 'deliveryItem'])
+            ->find($id);
+
+        return thisSuccess('OK', $query);
+    }
+
     public function buatPengiriman(Request $request)
     {
         $pengiriman = new Delivery();

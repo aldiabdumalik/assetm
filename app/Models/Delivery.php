@@ -17,6 +17,7 @@ class Delivery extends Model
         'delivery_resi',
         'jml_item',
         'estimasi',
+        'status',
     ];
 
     public function branchDelivery()

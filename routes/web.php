@@ -76,6 +76,8 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::controller(DeliveryController::class)->group(function () {
         Route::get('/pengiriman', 'index')->name('pengiriman');
+        Route::post('/pengiriman/datatable', 'deliveryDt')->name('pengiriman.dt');
+        Route::get('/pengiriman/{id}/detail', 'deliveryDetail')->name('pengiriman.detail');
         Route::post('/pengiriman/add', 'buatPengiriman')->name('pengiriman.add');
         Route::get('/pengiriman/{id}/view', 'pengirimanView')->name('pengiriman.view');
         Route::post('/pengiriman/belum_dt', 'belumDt')->name('pengiriman.belum_dt');
