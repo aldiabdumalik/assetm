@@ -40,3 +40,6 @@
     </div>
 </div>
 @endsection
+@push('page-js')
+    <script type="module" src="{{asset('custom/js/reporting.js')}}"></script>
+@endpush

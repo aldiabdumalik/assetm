@@ -20,6 +20,11 @@ class Delivery extends Model
         'status',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function branchDelivery()
     {
         return $this->belongsTo(Branch::class, 'delivery_branch_id', 'id');

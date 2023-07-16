@@ -39,4 +39,14 @@ class TestingItem extends Model
     {
         return $this->belongsTo(ItemType::class, 'type_id');    
     }
+
+    public function itemModel()
+    {
+        return $this->belongsTo(ItemModel::class, 'model_id');    
+    }
+
+    public function scanningItem()
+    {
+        return $this->hasOne(ScanningItem::class, 'scan_sn', 'barcode');    
+    }
 }

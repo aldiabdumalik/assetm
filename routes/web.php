@@ -91,6 +91,7 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::controller(ReportingController::class)->group(function () {
         Route::get('/reporting', 'index')->name('reporting');
+        Route::get('/reporting/download', 'download')->name('reporting.download');
     });
 });
 Route::middleware(['auth'])->group(function () {
